@@ -1,0 +1,151 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    background-color: #f0f0f0 !important;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #f0f0f0 !important;
+}
+
+.my-footer {
+    font-size: 0.9rem;
+    background-color: #f0f0f0 !important;
+}
+/*.brand-link .brand-image {
+    padding: 0.5rem !important;
+    line-height: 1.5 !important;
+}*/
+
+.main-sidebar, .my-sidebar, .my-content-wrapper {
+    color: #3E455C !important;
+    background-color: #f0f0f0 !important;
+}
+
+.my-navbar-dark {
+    color: #fff !important;
+    background-color: #3E455C !important;
+}
+
+.my-brand-link .my-brand-image {
+    color: #fff !important;
+    background-color: #3E455C !important;    
+}
+
+.my-brand-link {
+    background-color: #3E455C !important;
+    border-bottom: 1px solid !important;
+}
+
+.navbar-fa {
+    color: #3e445b !important;
+}
+
+.my-brand-text {
+    color:#fff;
+}
+
+li.my-nav-header, .my-nav-header, li.nav-item, .nav-item {
+    font-size: 0.9rem !important;
+    color: #3E455C !important;
+}
+
+li.my-nav-header, .my-nav-header, li.nav-item, .nav-item {
+    font-weight: bolder !important;
+}
+
+.my-btn-outline-success, .my-btn-outline-danger {
+    min-width: min-content !important;
+    max-width: 12rem !important;
+    width: 12rem !important;
+    font-size: 0.9rem !important;
+}
+
+.my-btn-outline-success {
+    color: #3e445b !important;
+    border-color: #3e445b !important;
+}
+
+    .my-btn-outline-success:hover {
+        background-color: #a9cae2 !important;
+        border-color: #3e445b !important;
+    }
+
+.my-btn-outline-danger {
+    color: red !important;
+}
+
+    .my-btn-outline-danger:hover {
+        color: #fff !important;
+        border-color: red !important;
+    }
+
+    .my-btn-outline-danger:hover .far {
+        color: #fff !important;
+        border-color: red !important;
+    }
+
+
+.my-fa, .my-btn-fa {
+    margin-right: 0.3rem;
+    color: #3E455C !important;
+}
+.my-btn-fa {
+    border-radius: 2% !important;
+}
+
+.my-btn-fa-danger{
+margin-right: 0.3rem;
+color: red !important;
+border-radius: 2% !important;
+}
+
+.my-btn-card {
+    max-width:20rem !important;
+    min-width:fit-content !important;
+}
+
+.my-btn-app {
+    text-decoration: none !important;
+    color: #3E455C !important;
+    margin-bottom:0 !important;      
+}
+
+.nav-link {
+    font-weight: normal !important;
+}
+
+.nav-link:hover {
+    background-color: #a9cae2 !important;
+}
+
+.my-card {
+    background-color: #f0f0f0 !important;
+    max-width:100vw;
+}
+
+.callout.callout-info {
+    border-left-color: #3E455C !important;
+}
+
+.my-callout-0-bottom-margin
+{
+    margin-bottom:0 !important;
+}
+
+.my-li:active {
+    font-weight: bolder !important;
+    color: red !important;
+    background-color: red !important;
+}
