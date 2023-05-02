@@ -99,7 +99,8 @@ li.my-nav-header, .my-nav-header, li.nav-item, .nav-item {
 
 .my-fa, .my-btn-fa {
     margin-right: 0.3rem;
-    color: #3E455C !important;
+    /*color: #3E455C !important;*/
+    color: #fff !important;
 }
 .my-btn-fa {
     border-radius: 2% !important;
@@ -148,4 +149,137 @@ border-radius: 2% !important;
     font-weight: bolder !important;
     color: red !important;
     background-color: red !important;
+}
+
+.div-Horizontal-Input {
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    margin-bottom: 0.5em;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.loader-parent {
+    position: relative;
+    padding: 0;
+}
+
+.canvasLoaderWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.my-label {
+    margin-bottom: 0 !important;
+    font-size: 1.2em;
+}
+
+.my-label-span {
+    font-size: 1.2em;
+}
+
+.slider-aitrios .slider {
+    border: 1px solid #3e445b;
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    background: #f0f0f0;
+    width: 100%;
+    -webkit-appearance: none;
+    height: 0.7em;
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.8;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: #3e445b;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: #3e445b;
+    cursor: pointer;
+}
+
+.slider:disabled {
+    opacity: 0.3;
+    background: #ebe9e9
+}
+
+.div-Horizontal-Input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    margin-bottom: 0.5em;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.card {
+    margin-bottom : 0 !important;
+}
+
+.card-header {
+    color: #fff !important;
+    background-color: #3e445b !important;
+}
+
+.card-body {
+    padding : 0 !important;
+}
+
+.callout {
+    margin-bottom: 0 !important;
+    padding-top: 0.5rem !important;
+    padding-bottom:0.5rem !important;
+}
+
+.pre-inline {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    display: inline
+}
+
+.fa-wifi-connected {
+    color : lightgreen !important;
+}
+
+.fa-wifi-disconnected {
+    color: lightgray !important;
+}
+
+.label-threshold {
+    font-weight : 400 !important;
+    margin-bottom: 0 !important;
+}
+
+.my-div-image {
+    max-height: 30vh !important;
+    margin-bottom: 0.5em;
 }

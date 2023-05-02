@@ -6,9 +6,10 @@
     <title>@ViewData["Title"] - AITRIOS_Console_Mockup</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AITRIOS_Console_Mockup.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/alt/adminlte.light.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap2/bootstrap-switch.min.css" integrity="sha512-lANJTDwF23Xos7T5Q7SNbZ7dFxLG8YSQJ2qCGrav0Fhe5vns60+tUECZv+9udXdKiX3/YTWt++tEKyEcuZv4dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 
@@ -20,32 +21,10 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block my-li" id="li_dashboard">
-                    <a href="~/Home/" class="nav-link">Dashboard</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block my-li" id="li_advanced">
-                    <a href="~/Home/Advanced" class="nav-link">Advanced</a>
-                </li>
             </ul>
 
             <!-- Top Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span id="navbarNotificationSpan" class="badge badge-warning navbar-badge"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span id="navbarAlertHeader" class="dropdown-header"></span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i>Last Alert
-                            <span id="navbarAlertSpan" class="float-right text-muted text-sm"></span>
-                        </a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -67,37 +46,22 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-header my-nav-header">Device Management</li>
                         <li class="nav-item">
                             <a href="../../index.html" class="nav-link">
-                                <i class="nav-icon fas fa-laptop-medical navbar-fa"></i>
-                                <p>Enroll Devices</p>
+                                <i class="nav-icon fa-solid fa-circle-play navbar-fa"></i>
+                                <p>Start Demo</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
-                                <i class="nav-icon fas fa-cogs navbar-fa"></i>
-                                <p>Manage Devices</p>
-                            </a>
-                        </li>
-                        <li class="nav-header my-nav-header">AI Model</li>
-                        <li class="nav-item">
-                            <a href="https://devicecatalog.azure.com/devices?certificationBadgeTypes=PnP" target="_blank" class="nav-link">
-                                <i class="nav-icon fas fa-folder-plus navbar-fa"></i>
-                                <p>Create Model</p>
+                            <a href="../../index.html" class="nav-link">
+                                <i class="nav-icon fa-solid fa-circle-stop navbar-fa"></i>
+                                <p>Stop Demo</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://devicecatalog.azure.com/devices?certificationBadgeTypes=PnP" target="_blank" class="nav-link">
-                                <i class="nav-icon fas fa-brain navbar-fa"></i>
-
-                                <p>Train Model</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://devicecatalog.azure.com/devices?certificationBadgeTypes=PnP" target="_blank" class="nav-link">
-                                <i class="nav-icon fas fa-cloud-download-alt navbar-fa"></i>
-                                <p>Deploy Model</p>
+                            <a href="../../index.html" class="nav-link">
+                                <i class="nav-icon fa-solid fa-cloud navbar-fa"></i>
+                                <p>Check Connectivity</p>
                             </a>
                         </li>
                     </ul>
@@ -109,12 +73,6 @@
                 @RenderBody()
             </section>
         </div>
-        <footer class="main-footer my-footer">
-            <div class="float-right d-none d-sm-inline">
-                AITRIOS Console
-            </div>
-            <strong>Copyright &copy; 2019-2023 <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></strong> All rights reserved.
-        </footer>
         <aside class="control-sidebar control-sidebar-dark control-sidebar-light">
             <!-- Control sidebar content goes here -->
         </aside>
@@ -123,6 +81,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js" integrity="sha512-J+763o/bd3r9iW+gFEqTaeyi+uAphmzkE/zU8FxY6iAvD3nQKXa+ZAWkBI9QS9QkYEKddQoiy0I5GDxKf/ORBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
