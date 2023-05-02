@@ -280,6 +280,11 @@ border-radius: 2% !important;
 }
 
 .my-div-image {
-    max-height: 30vh !important;
+    max-height: 320px !important;
     margin-bottom: 0.5em;
+}
+
+.my-col {
+    margin-bottom:0.5em !important;
+    min-width:400px !important;
 }

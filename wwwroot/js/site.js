@@ -14,7 +14,7 @@
     overlayCtx.font = '30px serif';
     overlayCtx.lineWidth = 1;
     overlayCtx.textBaseline = "bottom";
-    overlayCtx.fillStyle = "yellow";
+    overlayCtx.fillStyle = "red";
     overlayCtx.textAlign = "center";
     overlayCtx.fillText("overlay sample", parseInt(overlayCanvas.width / 2), parseInt(overlayCanvas.height/2));
 }

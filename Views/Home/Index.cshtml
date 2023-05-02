@@ -4,7 +4,9 @@
 
 <div class="container-fluid">
     <div class="row" style="padding-top: 0.25em;">
-        <div class="col-12 col-sm-4 col-md-4">
+
+        <!-- Camera 1 -->
+        <div class="col-12 col-sm-4 col-md-4 my-col">
             <div class="card card-default my-card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -57,13 +59,13 @@
                         </div>
                         <input type="checkbox" name="aiSwtichCamera1" data-handle-width="100" checked data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Start" data-off-text="Stop">
                     </div>
-                    <div class="callout callout-info" style="margin-top:0.5em">
+                    <div class="callout callout-info">
                         <h5>
                             <i class="fas fa-poll"></i>
                             Results
                         </h5>
-                        <div class="row">
-                            <div class="col-md-auto">
+                        <div class="row" style="color:red">
+                            <div class="col-4 col-sm-4 col-md-4">
                                 <div style="text-align:right">
                                     <strong># of xxx detected</strong>
                                 </div>
@@ -71,12 +73,12 @@
                                     <strong>Average Power Consumption</strong>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4 col-sm-4 col-md-4">
                                 <div>
-                                    <pre class="pre-inline">abcd</pre>
+                                    <pre class="pre-inline" style="color:red"> abcd</pre>
                                 </div>
-                                <div>
-                                    <pre class="pre-inline"><pre class="pre-inline">xyz</pre> Wh</pre>
+                                <div style="color:red">
+                                    <pre class="pre-inline" style="color:red"><pre class="pre-inline" style="color:red">xyz</pre> Wh</pre>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +88,7 @@
                             <i class="fa-solid fa-images"></i>
                             Image
                         </h5>
-                        <div class="container loader-parent my-div-image" height="320" width="320">
+                        <div class="container loader-parent my-div-image">
                             <div class="row justify-content-center align-items-center">
                                 <canvas id="canvasCamera1Overlay" height="320" width="320" style="max-width:320px;max-height:320px;z-index:300"></canvas>
                                 <canvas id="canvasCamera1" height="320" width="320" style="max-width:320px;max-height:320px;z-index:100;position:absolute"></canvas>
@@ -96,7 +98,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        
+        <!-- Camera 2 -->
+        <div class="col-12 col-sm-4 col-md-4 my-col">
             <div class="card card-default my-card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -148,13 +152,13 @@
                         </div>
                         <input type="checkbox" name="aiSwtichCamera2" data-handle-width="100" checked data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Start" data-off-text="Stop">
                     </div>
-                    <div class="callout callout-info" style="margin-top:0.5em">
+                    <div class="callout callout-info" style="margin-top:0.1em">
                         <h5>
                             <i class="fas fa-poll"></i>
                             Results
                         </h5>
-                        <div class="row">
-                            <div class="col-md-auto">
+                        <div class="row" style="color:red">
+                            <div class="col-4 col-sm-4 col-md-4">
                                 <div style="text-align:right">
                                     <strong># of xxx detected</strong>
                                 </div>
@@ -162,17 +166,17 @@
                                     <strong>Average Power Consumption</strong>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4 col-sm-4 col-md-4">
                                 <div>
-                                    <pre class="pre-inline">abcd</pre>
+                                    <pre class="pre-inline" style="color:red"> abcd</pre>
                                 </div>
-                                <div>
-                                    <pre class="pre-inline"><pre class="pre-inline">xyz</pre> Wh</pre>
+                                <div style="color:red">
+                                    <pre class="pre-inline" style="color:red"><pre class="pre-inline" style="color:red">xyz</pre> Wh</pre>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info">
+                    <div class="callout callout-info" style="margin-bottom:0.5em">
                         <h5>
                             <i class="fa-solid fa-images"></i>
                             Image
@@ -188,7 +192,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+
+        <!-- Camera 3-->
+        <div class="col-12 col-sm-4 col-md-4 my-col">
             <div class="card card-default my-card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -240,13 +246,13 @@
                         </div>
                         <input type="checkbox" name="aiSwtichCamera3" data-handle-width="100" checked data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Start" data-off-text="Stop">
                     </div>
-                    <div class="callout callout-info" style="margin-top:0.5em">
+                    <div class="callout callout-info" style="margin-top:0.1em">
                         <h5>
                             <i class="fas fa-poll"></i>
                             Results
                         </h5>
-                        <div class="row">
-                            <div class="col-md-auto">
+                        <div class="row" style="color:red">
+                            <div class="col-4 col-sm-4 col-md-4">
                                 <div style="text-align:right">
                                     <strong># of xxx detected</strong>
                                 </div>
@@ -254,17 +260,17 @@
                                     <strong>Average Power Consumption</strong>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4 col-sm-4 col-md-4">
                                 <div>
-                                    <pre class="pre-inline">abcd</pre>
+                                    <pre class="pre-inline" style="color:red"> abcd</pre>
                                 </div>
-                                <div>
-                                    <pre class="pre-inline"><pre class="pre-inline">xyz</pre> Wh</pre>
+                                <div style="color:red">
+                                    <pre class="pre-inline" style="color:red"><pre class="pre-inline" style="color:red">xyz</pre> Wh</pre>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info">
+                    <div class="callout callout-info" style="margin-bottom:0.5em">
                         <h5>
                             <i class="fa-solid fa-images"></i>
                             Image
