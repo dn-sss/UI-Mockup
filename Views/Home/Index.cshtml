@@ -293,6 +293,7 @@
     {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script type="text/javascript" src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script type="text/javascript" src="/js/site.js"></script>
 
 
@@ -307,6 +308,7 @@
         let sliderThresholdValueCamera1 = document.getElementById("SpanConfidenceLevelCamera1");
         let sliderThresholdValueCamera2 = document.getElementById("SpanConfidenceLevelCamera2");
         let sliderThresholdValueCamera3 = document.getElementById("SpanConfidenceLevelCamera3");
+        let signalRHub;
 
         $(document).ready(function () {
 
@@ -331,6 +333,24 @@
             initCanvas('canvasCamera1', "/images/People.png");
             initCanvas('canvasCamera2', "/images/Box.png");
             initCanvas('canvasCamera3', "/images/Car.png");
+
+            // SignalR
+            signalRHub = new signalR.HubConnectionBuilder()
+                .withUrl("/hub")
+                .configureLogging(signalR.LogLevel.Trace)
+                .build();
+
+            signalRHub.start()
+                .then(() => console.log('SignalR connected!'))
+                .catch(err => console.log(`Error while establishing a connection : ${err.toString()}`));
+
+            signalRHub.on('deviceTelemetry', function (payload) {
+                let jsonData = JSON.parse(payload);
+                let jsonPretty = JSON.stringify(jsonData, undefined, 2);
+                console.debug(`deviceTelemetry ${jsonPretty}`);
+                debugger
+            });
+
 
         });
     </script>
