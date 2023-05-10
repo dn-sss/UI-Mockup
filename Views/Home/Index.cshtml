@@ -4,7 +4,6 @@
 
 <div class="container-fluid">
     <div class="row" style="padding-top: 0.25em;">
-
         <!-- Camera 1 -->
         <div class="col-12 col-sm-4 col-md-4 my-col">
             <div class="card card-default my-card">
@@ -287,6 +286,14 @@
             </div>
         </div>
     </div>
+    <div class="row" style="padding-top: 0.25em;">
+        <div class="col-12 col-sm-12 col-md-12 my-col">
+            <div class="card card-default my-card">
+                <textarea id="txAreaStatus" style="height:7em;font-family:monospace">
+                </textarea>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts
@@ -334,10 +341,12 @@
             initCanvas('canvasCamera2', "/images/Box.png");
             initCanvas('canvasCamera3', "/images/Car.png");
 
+            document.getElementById("txAreaStatus").value = '';
+
             // SignalR
             signalRHub = new signalR.HubConnectionBuilder()
                 .withUrl("/hub")
-                .configureLogging(signalR.LogLevel.Trace)
+                .configureLogging(signalR.LogLevel.Information)
                 .build();
 
             signalRHub.start()
@@ -347,11 +356,15 @@
             signalRHub.on('deviceTelemetry', function (payload) {
                 let jsonData = JSON.parse(payload);
                 let jsonPretty = JSON.stringify(jsonData, undefined, 2);
+                let timeStamp = getDate(jsonData["T"]);
                 console.debug(`deviceTelemetry ${jsonPretty}`);
-                debugger
+                document.getElementById("txAreaStatus").value += `${timeStamp} Telemetry : ${jsonPretty}\r\n`;
             });
-
-
         });
+
+        function getDate(dateString) {
+            var date = new Date(Date.UTC(dateString.substr(0, 4), dateString.substr(4, 2), dateString.substr(6, 2), dateString.substr(8, 2), dateString.substr(10, 2), dateString.substr(12, 2), dateString.substr(14, 3)));
+            return date;
+        }
     </script>
 }
