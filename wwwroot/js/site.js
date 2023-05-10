@@ -35,3 +35,8 @@ function processSliderInput(evt) {
     let label = this.labels[0];
     label.firstElementChild.innerText = evt.target.value;
 }
+
+function EnableDisableStatus() {
+    let txtArea = document.getElementById("txAreaStatus")
+    txtArea.hidden = !txtArea.hidden;
+}
