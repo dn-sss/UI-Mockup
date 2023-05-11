@@ -1,4 +1,5 @@
 
+using AITRIOS_Console_Mockup.Models;
 using AITRIOS_Console_Mockup.SignalR.Hubs;
 using Microsoft.Extensions.Configuration;
 
@@ -14,6 +15,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR().AddAzureSignalR(builder.Configuration.GetSection("Azure")
                                     .GetSection("SignalR")
                                     .GetValue<string>("ConnectionString"));
+
+builder.Services.Configure<AppSettings>(
+    builder.Configuration.GetSection("Azure"));
 
 var app = builder.Build();
 

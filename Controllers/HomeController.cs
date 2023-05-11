@@ -1,5 +1,6 @@
 ﻿using AITRIOS_Console_Mockup.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace AITRIOS_Console_Mockup.Controllers
@@ -7,14 +8,24 @@ namespace AITRIOS_Console_Mockup.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppSettings _appSettings;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IOptions<AppSettings> optionsAccessor, ILogger<HomeController> logger)
         {
+            
             _logger = logger;
+            _appSettings = optionsAccessor.Value;
+
         }
 
         public IActionResult Index()
         {
+            if (_appSettings != null && _appSettings.SuitcaseDemoSetting != null)
+            {
+                ViewData["Camera_1_ID"] = _appSettings.SuitcaseDemoSetting.Camera_1_ID;
+                ViewData["Camera_2_ID"] = _appSettings.SuitcaseDemoSetting.Camera_2_ID;
+                ViewData["Camera_3_ID"] = _appSettings.SuitcaseDemoSetting.Camera_3_ID;
+            }
             return View();
         }
 

@@ -9,11 +9,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/alt/adminlte.light.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap2/bootstrap-switch.min.css" integrity="sha512-lANJTDwF23Xos7T5Q7SNbZ7dFxLG8YSQJ2qCGrav0Fhe5vns60+tUECZv+9udXdKiX3/YTWt++tEKyEcuZv4dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @@keyframes spinner {
+            0% {
+                transform: translate3d(-50%, -50%, 0) rotate(0deg);
+            }
 
+            100% {
+                transform: translate3d(-50%, -50%, 0) rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 
     <div class="wrapper">
+
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="images/AITRIOS-Logo-White.png" alt="AITRIOS Logo" height="255" width="255" style="">
+        </div>
         <!-- Top Navbar -->
         <nav class="main-header navbar navbar-expand navbar-dark my-navbar-dark">
             <!-- Top Left navbar links -->
@@ -70,9 +84,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="EnableDisableStatus();return false;">
+                            <a href="#" class="nav-link" onclick="EnableDisableLogCard();return false;">
                                 <i class="nav-icon fas fa-cogs"></i>
-                                <p>Display Status</p>
+                                <p id="labeltxAreaStatus">Display Logs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" onclick="GetDevices();return false;">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>GetDevices (Test Purpose)</p>
                             </a>
                         </li>
                     </ul>
@@ -91,6 +111,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ConsoleAPI.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js" integrity="sha512-J+763o/bd3r9iW+gFEqTaeyi+uAphmzkE/zU8FxY6iAvD3nQKXa+ZAWkBI9QS9QkYEKddQoiy0I5GDxKf/ORBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @await RenderSectionAsync("Scripts", required: false)
