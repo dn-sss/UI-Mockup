@@ -27,8 +27,8 @@ function drawCanvas(image, canvasId) {
 
 function processSliderInput(evt) {
     // get label
-    let label = this.labels[0];
-    label.firstElementChild.innerText = evt.target.value;
+    //$(`#${evt.target.nextSibling.nextSibling.id}`).html(`${evt.target.value}%`);
+    $(`#${evt.target.id}Label`).html(`${evt.target.value}%`);
 }
 
 function EnableDisableLogCard() {
@@ -65,11 +65,11 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
             if (jsonData.device_id == deviceId) {
                 $(`#${cameraNameId}`).html(jsonData['property'].device_name);
                 if (jsonData.connectionState == "Connected") {
-                    $(`#${wifiIconId}`).addClass('fa-wifi-connected');
-                    $(`#${wifiIconId}`).removeClass('fa-wifi-disconnected');
+                    $(`#${wifiIconId}`).addClass('WiFi-Svg-Connect');
+                    $(`#${wifiIconId}`).removeClass('WiFi-Svg-DisConnect');
                 } else {
-                    $(`#${wifiIconId}`).addClass('fa-wifi-disconnected');
-                    $(`#${wifiIconId}`).removeClass('fa-wifi-connected');
+                    $(`#${wifiIconId}`).removeClass('WiFi-Svg-DisConnect');
+                    $(`#${wifiIconId}`).addClass('WiFi-Svg-Connect');
                 }
             }
 

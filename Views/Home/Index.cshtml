@@ -3,90 +3,77 @@
 }
 
 <div class="container-fluid">
-    <div class="row" style="padding-top: 0.25em;">
+    <div class="row" style="padding-top:28px;">
         <!-- Camera 1 -->
         <div class="col-12 col-sm-4 col-md-4 my-col">
-            <div class="card card-default my-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i id="camera_1_wifi_icon" class="fa-solid fa-wifi fa-wifi-connected"></i>
-                        <span id="camera_1_name"></span>
-                    </h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div id="camera_1_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
+                        <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="header-camera-name font-subhead" id="camera_1_name">Loading...</div>
+                    <div class="header-right-icon-frame">
+                        <span class="header-AI-Label">
+                            AI
+                        </span>
+                        <span>
+                            <div class="form-field large">
+                                <input type="checkbox" id="toggle-1" class="toggle">
+                            </div>
+                        </span>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-brain "></i>
-                            AI Model
-                        </h5>
-                        <div>
-                            Select AI Model
-                        </div>
-
-                        <select name="modelListCamera1" id="modelListCamera1" class="form-control custom-select">
-                            <option value="people" selected>People Detection</option>
-                            <option value="box">Box Detection</option>
-                            <option value="car">Car Detection</option>
+            </div>
+            <div class="body-frame">
+                <div class="body-frame-top">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Brain.svg" alt="AI" width="20" height="20" style="vertical-align: text-top;">
+                        <span class="font-subhead">AI Model</span>
+                    </div>
+                    <div class="body-frame-content font-labels">
+                        AI Model
+                        <select name="modelListCamera1" id="modelListCamera1" class="custom-select my-select font-values" style="color:#000000 !important">
                         </select>
                     </div>
-
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-sliders"></i>
-                            Inference Threshold
-                        </h5>
-
-                        <div>
-                            <div class="slider-aitrios" style="overflow:auto">
-                                <label class="label-threshold" for="SliderConfidenceLevelCamera1">Current Threshold : <span id="SpanConfidenceLevelCamera1">10</span><span>%</span></label>
-                                <input type="range" class="slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera1" style="width:100%">
+                    <div class="body-frame-content font-labels">
+                        Current Threshold
+                        <div class="slider-frame">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera1">
+                            <div class="slider-label-frame font-values" id="SliderConfidenceLevelCamera1Label">
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fas fa-play-circle"></i>
-                            AI Inference
-                        </h5>
-                        <div>
-                            Start/Stop AI Inference
-                        </div>
-                        <input type="checkbox" name="aiSwtichCamera1" data-handle-width="100" data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Running" data-off-text="Stopped">
+                </div>
+                <hr class="separator"/>
+                <div class="body-frame-middle">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Results</span>
                     </div>
-                    <div class="callout callout-info" style="margin-top:0.1em">
-                        <h5>
-                            <i class="fas fa-poll"></i>
-                            Results
-                        </h5>
-                        <div class="row" style="color:red">
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div style="text-align:right">
-                                    <strong># of xxx detected</strong>
-                                </div>
-                                <div style="text-align:right">
-                                    <strong>Average Power Consumption</strong>
-                                </div>
+                    <div class="body-frame-content body-frame-results font-labels">
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                Inference Results
+                                <div class="result_label font-values">test</div>
                             </div>
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div>
-                                    <pre class="pre-inline" style="color:red"> abcd</pre>
-                                </div>
-                                <div style="color:red">
-                                    <pre class="pre-inline" style="color:red"><pre class="pre-inline" style="color:red">xyz</pre> Wh</pre>
-                                </div>
+                        </div>
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                People Detected
+                                <div class="result_label font-values">test</div>
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-images"></i>
-                            Image
-                        </h5>
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-bottom">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Image.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Image</span>
+                    </div>
+                    <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image">
                             <div class="row justify-content-center align-items-center">
                                 <canvas id="canvasCamera1Overlay" height="320" width="320" style="max-width:320px;max-height:320px;z-index:300"></canvas>
@@ -101,90 +88,77 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Camera 2 -->
+        <!-- Camera 2-->
         <div class="col-12 col-sm-4 col-md-4 my-col">
-            <div class="card card-default my-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i id="camera_2_wifi_icon" class="fa-solid fa-wifi fa-wifi-connected"></i>
-                        <span id="camera_2_name"></span>
-                    </h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div id="camera_2_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
+                        <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="header-camera-name font-subhead" id="camera_2_name">Loading...</div>
+                    <div class="header-right-icon-frame">
+                        <span class="header-AI-Label">
+                            AI
+                        </span>
+                        <span>
+                            <div class="form-field large">
+                                <input type="checkbox" id="toggle-2" class="toggle">
+                            </div>
+                        </span>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-brain"></i>
-                            AI Model
-                        </h5>
-                        <div>
-                            Select AI Model
-                        </div>
-
-                        <select name="modelListCamera2" id="modelListCamera2" class="form-control custom-select">
-                            <option value="people">People Detection</option>
-                            <option value="box" selected>Box Detection</option>
-                            <option value="car">Car Detection</option>
+            </div>
+            <div class="body-frame">
+                <div class="body-frame-top">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Brain.svg" alt="AI" width="20" height="20" style="vertical-align: text-top;">
+                        <span class="font-subhead">AI Model</span>
+                    </div>
+                    <div class="body-frame-content font-labels">
+                        AI Model
+                        <select name="modelListCamera2" id="modelListCamera2" class="custom-select my-select font-values">
                         </select>
                     </div>
-
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-sliders"></i>
-                            Inference Threshold
-                        </h5>
-                        <div>
-                            <div class="slider-aitrios" style="overflow:auto">
-                                <label class="label-threshold" for="SliderConfidenceLevelCamera2">Current Threshold : <span id="SpanConfidenceLevelCamera2">10</span><span>%</span></label>
-                                <input type="range" class="slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera2" style="width:100%">
+                    <div class="body-frame-content font-labels">
+                        Current Threshold
+                        <div class="slider-frame">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera2">
+                            <div class="slider-label-frame font-values" id="SliderConfidenceLevelCamera2Label">
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fas fa-play-circle"></i>
-                            AI Inference
-                        </h5>
-                        <div>
-                            Start/Stop AI Inference
-                        </div>
-                        <input type="checkbox" name="aiSwtichCamera2" data-handle-width="100" data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Running" data-off-text="Stopped">
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-middle">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Results</span>
                     </div>
-                    <div class="callout callout-info" style="margin-top:0.1em">
-                        <h5>
-                            <i class="fas fa-poll"></i>
-                            Results
-                        </h5>
-                        <div class="row" style="color:red">
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div style="text-align:right">
-                                    <strong># of xxx detected</strong>
-                                </div>
-                                <div style="text-align:right">
-                                    <strong>Average Power Consumption</strong>
-                                </div>
+                    <div class="body-frame-content body-frame-results font-labels">
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                Inference Results
+                                <div class="result_label font-values">test</div>
                             </div>
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div>
-                                    <pre class="pre-inline" style="color:red"> abcd</pre>
-                                </div>
-                                <div style="color:red">
-                                    <pre class="pre-inline" style="color:red"><pre class="pre-inline" style="color:red">xyz</pre> Wh</pre>
-                                </div>
+                        </div>
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                People Detected
+                                <div class="result_label font-values">test</div>
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info" style="margin-bottom:0.5em">
-                        <h5>
-                            <i class="fa-solid fa-images"></i>
-                            Image
-                        </h5>
-                        <div class="container loader-parent my-div-image" height="320" width="320">
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-bottom">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Image.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Image</span>
+                    </div>
+                    <div class="body-frame-canvas font-labels">
+                        <div class="container loader-parent my-div-image">
                             <div class="row justify-content-center align-items-center">
                                 <canvas id="canvasCamera2Overlay" height="320" width="320" style="max-width:320px;max-height:320px;z-index:300"></canvas>
                                 <canvas id="canvasCamera2" height="320" width="320" style="max-width:320px;max-height:320px;z-index:100;position:absolute"></canvas>
@@ -195,94 +169,82 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
         <!-- Camera 3-->
         <div class="col-12 col-sm-4 col-md-4 my-col">
-            <div class="card card-default my-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i id="camera_3_wifi_icon" class="fa-solid fa-wifi fa-wifi-disconnected"></i>
-                        <span id="camera_3_name"></span>
-                    </h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div id="camera_3_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
+                        <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
+                        </svg>
+                    </div>                    
+                    <div class="header-camera-name font-subhead" id="camera_3_name">Loading...</div>
+                    <div class="header-right-icon-frame">
+                        <span class="header-AI-Label">
+                            AI
+                        </span>
+                        <span>
+                            <div class="form-field large">
+                                <input type="checkbox" id="toggle-3" class="toggle">
+                            </div>
+                        </span>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-brain"></i>
-                            AI Model
-                        </h5>
-                        <div>
-                            Select AI Model
-                        </div>
-
-                        <select name="modelListCamera3" id="modelListCamera3" class="form-control custom-select">
-                            <option value="people">People Detection</option>
-                            <option value="box">Box Detection</option>
-                            <option value="car" selected>Car Detection</option>
+            </div>
+            <div class="body-frame">
+                <div class="body-frame-top">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Brain.svg" alt="AI" width="20" height="20" style="vertical-align: text-top;">
+                        <span class="font-subhead">AI Model</span>
+                    </div>
+                    <div class="body-frame-content font-labels">
+                        AI Model
+                        <select name="modelListCamera1" id="modelListCamera1" class="custom-select my-select font-values" style="color:#000000 !important">
+                            @*<select class="form-control select2 font-values my-select" style="color:#000000 !important">*@
                         </select>
                     </div>
-
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fa-solid fa-sliders"></i>
-                            Inference Threshold
-                        </h5>
-                        <div>
-                            <div class="slider-aitrios" style="overflow:auto">
-                                <label class="label-threshold" for="SliderConfidenceLevelCamera3">Current Threshold : <span id="SpanConfidenceLevelCamera3">10</span><span>%</span></label>
-                                <input type="range" class="slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera3" style="width:100%">
+                    <div class="body-frame-content font-labels">
+                        Current Threshold
+                        <div class="slider-frame">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera3">
+                            <div class="slider-label-frame font-values" id="SliderConfidenceLevelCamera3Label">
+                                12%
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info">
-                        <h5>
-                            <i class="fas fa-play-circle"></i>
-                            AI Inference
-                        </h5>
-                        <div>
-                            Start/Stop AI Inference
-                        </div>
-                        <input type="checkbox" name="aiSwtichCamera3" data-handle-width="100" data-bootstrap-switch data-off-color="danger" data-on-color="success" data-on-text="Running" data-off-text="Stopped">
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-middle">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Results</span>
                     </div>
-                    <div class="callout callout-info" style="margin-top:0.1em">
-                        <h5>
-                            <i class="fas fa-poll"></i>
-                            Results
-                        </h5>
-                        <div class="row" style="color:red">
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div style="text-align:right">
-                                    <strong># of xxx detected</strong>
-                                </div>
-                                <div style="text-align:right">
-                                    <strong>Average Power Consumption</strong>
-                                </div>
+                    <div class="body-frame-content body-frame-results font-labels">
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                Inference Results
+                                <div class="result_label font-values">test</div>
                             </div>
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div>
-                                    <pre class="pre-inline" style="color:red"> abcd</pre>
-                                </div>
-                                <div style="color:red">
-                                    <pre class="pre-inline" style="color:red"><pre class="pre-inline" style="color:red">xyz</pre> Wh</pre>
-                                </div>
+                        </div>
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                People Detected
+                                <div class="result_label font-values">test</div>
                             </div>
                         </div>
                     </div>
-                    <div class="callout callout-info" style="margin-bottom:0.5em">
-                        <h5>
-                            <i class="fa-solid fa-images"></i>
-                            Image
-                        </h5>
-                        <div class="container loader-parent my-div-image" height="320" width="320">
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-bottom">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Image.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Image</span>
+                    </div>
+                    <div class="body-frame-canvas font-labels">
+                        <div class="container loader-parent my-div-image">
                             <div class="row justify-content-center align-items-center">
                                 <canvas id="canvasCamera3Overlay" height="320" width="320" style="max-width:320px;max-height:320px;z-index:300"></canvas>
                                 <canvas id="canvasCamera3" height="320" width="320" style="max-width:320px;max-height:320px;z-index:100;position:absolute"></canvas>
@@ -293,26 +255,24 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-    <div id="divLog" class="row" style="padding-top: 0.25em;padding-bottom: 0.25em;">
+    <div id="divLog" class="row" style="padding-top:28px;">
         <div class="col-12 col-sm-12 col-md-12 my-col">
-            <div class="card card-default my-card">
-                <div class="card-header" style="background-color:#fff !important">
-                    <div class="card-tools">
-                        <button type="button" class="btn" id="btnClearLogs">
-                            <i class="far fa-trash-alt btn-fa"></i>Clear Logs
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div class="header-camera-name font-subhead">Logs</div>
+                    <div class="header-right-icon-frame">
+                        <button type="button" class="btn font-values" id="btnClearLogs" style="color:#ffffff;">
+                            <i class="far fa-trash-alt btn-fa"></i>Clear
                         </button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div style="width:100%">
-                        <textarea id="txAreaStatus" title="Log Display Area" style="width:100%;height:20em;min-height:7em;font-size:0.8em;font-family:monospace;"></textarea>
-                    </div>
-                </div>
+            </div>
+            <div class="body-frame">
+                <textarea id="txAreaStatus" class="txArea-log font-monospace" title="Log Display Area"></textarea>
             </div>
         </div>
     </div>
@@ -334,9 +294,9 @@
         let sliderThresholdCamera1 = document.getElementById("SliderConfidenceLevelCamera1");
         let sliderThresholdCamera2 = document.getElementById("SliderConfidenceLevelCamera2");
         let sliderThresholdCamera3 = document.getElementById("SliderConfidenceLevelCamera3");
-        let sliderThresholdValueCamera1 = document.getElementById("SpanConfidenceLevelCamera1");
-        let sliderThresholdValueCamera2 = document.getElementById("SpanConfidenceLevelCamera2");
-        let sliderThresholdValueCamera3 = document.getElementById("SpanConfidenceLevelCamera3");
+        let sliderThresholdValueCamera1 = document.getElementById("SliderConfidenceLevelCamera1Label");
+        let sliderThresholdValueCamera2 = document.getElementById("SliderConfidenceLevelCamera2Label");
+        let sliderThresholdValueCamera3 = document.getElementById("SliderConfidenceLevelCamera3Label");
         let signalRHub;
 
         window.onload = function () {
@@ -352,9 +312,9 @@
             //
             // Slider
             //
-            SpanConfidenceLevelCamera1.innerHTML = SliderConfidenceLevelCamera1.value;
-            SpanConfidenceLevelCamera2.innerHTML = SliderConfidenceLevelCamera2.value;
-            SpanConfidenceLevelCamera3.innerHTML = SliderConfidenceLevelCamera3.value;
+            SliderConfidenceLevelCamera1Label.innerHTML = `${SliderConfidenceLevelCamera1.value}%`;
+            SliderConfidenceLevelCamera2Label.innerHTML = `${SliderConfidenceLevelCamera2.value}%`;
+            SliderConfidenceLevelCamera3Label.innerHTML = `${SliderConfidenceLevelCamera3.value}%`;
 
             sliderThresholdCamera1.addEventListener("input", processSliderInput, false);
             sliderThresholdCamera2.addEventListener("input", processSliderInput, false);
