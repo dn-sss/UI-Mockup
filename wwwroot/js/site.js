@@ -1,17 +1,30 @@
 ﻿function initCanvas(canvasId) {
+
+    let container = $(`#${canvasId}Container`);
+    let ContainerWidth = container.innerWidth();
+    let ContainerHeight = container.innerHeight();
+
     let canvas = document.getElementById(canvasId);
     let ctx = canvas.getContext('2d');
-    ctx.fillStyle = "#f0f0f0";
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    ctx.canvas.width = ContainerWidth;
+    ctx.canvas.height = ContainerHeight;
+
+    //ctx.fillStyle = "#f0f0f0";
+    //ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     let overlayCanvas = document.getElementById(`${canvasId}Overlay`);
     let overlayCtx = overlayCanvas.getContext('2d');
-    overlayCtx.font = '30px serif';
+
+    overlayCtx.canvas.width = ContainerWidth;
+    overlayCtx.canvas.height = ContainerHeight;
+
+    overlayCtx.font = '24px Inter';
     overlayCtx.lineWidth = 1;
-    overlayCtx.textBaseline = "bottom";
-    overlayCtx.fillStyle = "red";
+    overlayCtx.textBaseline = "top";
+    overlayCtx.fillStyle = "#11283E";
     overlayCtx.textAlign = "center";
-    overlayCtx.fillText("Loading Image", parseInt(overlayCanvas.width / 2), parseInt(overlayCanvas.height/2));
+    overlayCtx.fillText("Loading Image", parseInt(overlayCanvas.width / 2), parseInt((overlayCanvas.height/3) * 2));
 }
 
 function drawCanvas(image, canvasId) {
@@ -97,15 +110,28 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
                 var image = new Image();
                 image.onload = function () {
                     let loadedImageWidth = image.width;
-                    let loadedImageHeight = image.height;
 
-                    // get the scale
-                    // it is the min of the 2 ratios
-                    let scaleFactor = Math.max(canvas.width / image.width, canvas.height / image.height);
+                    let container = $(`#${canvasId}Container`);
+
+                    let ContainerWidth = container.innerWidth();
+                    let ContainerHeight = container.innerHeight();
+ 
+                    let scaleFactor;
+                    if (loadedImageWidth < ContainerWidth) {
+                        scaleFactor = 1;
+                    }
+                    else {
+                        // get the scale
+                        // it is the min of the 2 ratios
+                        scaleFactor = Math.max(ContainerWidth / image.width, ContainerHeight / image.height);
+                    }
 
                     // Finding the new width and height based on the scale factor
                     let newWidth = image.width * scaleFactor;
                     let newHeight = image.height * scaleFactor;
+
+                    ctx.canvas.height = newHeight;
+                    ctx.canvas.width = newWidth;
 
                     // get the top left position of the image
                     // in order to center the image within the canvas
@@ -114,7 +140,12 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
 
                     // When drawing the image, we have to scale down the image
                     // width and height in order to fit within the canvas
-                    ctx.drawImage(image, x, y, newWidth, newHeight);
+                     ctx.drawImage(image, x, y, newWidth, newHeight);
+                    //document.getElementById(`${canvasId}Container`);
+                    //ctx.canvas.width = document.getElementById(`${canvasId}Container`).clientWidth;
+                    //ctx.canvas.height = document.getElementById(`${canvasId}Container`).clientHeight;
+                    //ctx.drawImage(image, 0, 0, image.width, image.height);
+
                 };
                 image.src = `data:image/jpeg;base64,${jsonData.contents}`;
 
