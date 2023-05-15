@@ -73,10 +73,14 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
         .done(function (response) {
             let jsonData = JSON.parse(response.value);
             let jsonPretty = JSON.stringify(jsonData, undefined, 2);
+
             document.getElementById("txAreaStatus").value += `GetDevices : ${jsonPretty}\r\n`;
 
             if (jsonData.device_id == deviceId) {
+                // set name of the camera in the header
                 $(`#${cameraNameId}`).html(jsonData['property'].device_name);
+                $(`#${cameraNameId}`).attr('data-deviceId', deviceId);
+
                 if (jsonData.connectionState == "Connected") {
                     $(`#${wifiIconId}`).addClass('WiFi-Svg-Connect');
                     $(`#${wifiIconId}`).removeClass('WiFi-Svg-DisConnect');
@@ -160,4 +164,29 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
             let loader = document.getElementById(`${canvasId}LoaderWrapper`);
             loader.style.display = "none";
     });
+}
+
+function processTelemetry(payload) {
+
+    // Fill out logging area
+    let jsonData = JSON.parse(payload);
+    let jsonPretty = JSON.stringify(jsonData, undefined, 2);
+    let timeStamp = getDate(jsonData["T"]);
+
+    //$("#txAreaStatus").val($("#txAreaStatus").val() + `${timeStamp} Telemetry : ${jsonPretty}\r\n`);
+    document.getElementById("txAreaStatus").value += `${timeStamp} Telemetry : ${jsonPretty}\r\n`;
+
+    // Find results section based on device id match.
+    let deviceId = jsonData["DeviceId"];
+
+    for (index = 1; index < 4; index++)
+    {
+        if ($(`#camera_${index}_name`).attr('data-deviceId') == deviceId)
+        {
+            let labelId = `#result_label_${index}`;
+            $(`${labelId}`).attr('data-inferenceCount', parseInt($(`${labelId}`).attr('data-inferenceCount')) + 1);
+            $(`${labelId}`).html($(`${labelId}`).attr('data-inferenceCount'));
+        }
+    }
+
 }
