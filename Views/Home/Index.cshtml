@@ -37,7 +37,7 @@
                         <select name="modelListCamera1" id="modelListCamera1" class="custom-select my-select font-values" style="color:#000000 !important">
                         </select>
                     </div>
-                    <div class="body-frame-content font-labels">
+                    <div class="body-frame-content font-labels" style="display:none">
                         Current Threshold
                         <div class="slider-frame">
                             <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera1">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="canvasCamera1Container">
-                            <div class="row justify-content-center align-items-center" style="margin:0">
+                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
                                 <canvas class="my-canvas" id="canvasCamera1Overlay" style="z-index:300"></canvas>
                                 <canvas class="my-canvas" id="canvasCamera1" style="z-index:100;position:absolute"></canvas>
                             </div>
@@ -121,7 +121,7 @@
                         <select name="modelListCamera2" id="modelListCamera2" class="custom-select my-select font-values">
                         </select>
                     </div>
-                    <div class="body-frame-content font-labels">
+                    <div class="body-frame-content font-labels" style="display:none">
                         Current Threshold
                         <div class="slider-frame">
                             <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera2">
@@ -159,7 +159,7 @@
                     </div>
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="canvasCamera2Container">
-                            <div class="row justify-content-center align-items-center" style="margin:0">
+                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
                                 <canvas class="my-canvas" id="canvasCamera2Overlay" style="z-index:300"></canvas>
                                 <canvas class="my-canvas" id="canvasCamera2" style="z-index:100;position:absolute"></canvas>
                             </div>
@@ -206,7 +206,7 @@
                             @*<select class="form-control select2 font-values my-select" style="color:#000000 !important">*@
                         </select>
                     </div>
-                    <div class="body-frame-content font-labels">
+                    <div class="body-frame-content font-labels" style="display:none">
                         Current Threshold
                         <div class="slider-frame">
                             <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera3">
@@ -245,9 +245,9 @@
                     </div>
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="canvasCamera3Container">
-                            <div class="row justify-content-center align-items-center" style="margin:0">
+                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
                                 <canvas class="my-canvas" id="canvasCamera3Overlay" style="z-index:300"></canvas>
-                                <canvas class="my-canvas" id="canvasCamera3" style="z-index:100;position:absolute"></canvas>
+                                <canvas class="my-canvas" id="canvasCamera3" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
                             </div>
                             <div id="canvasCamera3LoaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
                                 <div class="canvasLoader">
@@ -312,13 +312,13 @@
             //
             // Slider
             //
-            SliderConfidenceLevelCamera1Label.innerHTML = `${SliderConfidenceLevelCamera1.value}%`;
-            SliderConfidenceLevelCamera2Label.innerHTML = `${SliderConfidenceLevelCamera2.value}%`;
-            SliderConfidenceLevelCamera3Label.innerHTML = `${SliderConfidenceLevelCamera3.value}%`;
+            //SliderConfidenceLevelCamera1Label.innerHTML = `${SliderConfidenceLevelCamera1.value}%`;
+            //SliderConfidenceLevelCamera2Label.innerHTML = `${SliderConfidenceLevelCamera2.value}%`;
+            //SliderConfidenceLevelCamera3Label.innerHTML = `${SliderConfidenceLevelCamera3.value}%`;
 
-            sliderThresholdCamera1.addEventListener("input", processSliderInput, false);
-            sliderThresholdCamera2.addEventListener("input", processSliderInput, false);
-            sliderThresholdCamera3.addEventListener("input", processSliderInput, false);
+            //sliderThresholdCamera1.addEventListener("input", processSliderInput, false);
+            //sliderThresholdCamera2.addEventListener("input", processSliderInput, false);
+            //sliderThresholdCamera3.addEventListener("input", processSliderInput, false);
 
             $("input[data-bootstrap-switch]").each(function () {
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
@@ -348,10 +348,11 @@
                 processTelemetry(payload);
             });
 
+            new ResizeObserver(canvasResize).observe(document.getElementById('canvasCamera3Container'));
 
-            //document.getElementById("camera_1_name").innerHTML = '@(ViewData["Camera_1_ID"])';
-            //document.getElementById("camera_2_name").innerHTML = '@(ViewData["Camera_2_ID"])';
-            //document.getElementById("camera_3_name").innerHTML = '@(ViewData["Camera_3_ID"])';
+            //const canvas = document.getElementsByTagName('canvasCamera3Container')[0];
+            //const observer = new ResizeObserver(onResize);
+            //observer.observe(canvas);
 
             UpdateCameraNames('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
            
@@ -367,6 +368,32 @@
             var message = '@ViewData["Camera_1_ID"]';
             console.debug(message);
         })
+
+        var resizeIt = function () {
+            console.log("Resize");
+            //var size = calculateAspectRatioFit($canvas.width(), $canvas.height(), $container.width(), $container.height());
+
+            //$canvas.css('height', size.height);
+            //$canvas.css('width', size.width);
+        };
+
+        function canvasResize(test) {
+            //let container = $('#canvasCamera3Container');
+            //console.log(`${container.innerWidth()} x ${container.innerHeight()}`);
+            //var canvas = document.getElementById('canvasCamera3');
+            //var ctx = canvas.getContext("2d");
+
+            //let data = ctx.getImageData();
+            //canvas.width = `${container.innerWidth()}px`;
+            //canvas.style.height = `${container.innerHeight()}px`;
+            //ctx.putImageData(data);
+        }
+
+        function StartInference() {
+
+            StartInferences('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+        }
+
 
     </script>
 }

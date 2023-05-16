@@ -7,8 +7,8 @@
     let canvas = document.getElementById(canvasId);
     let ctx = canvas.getContext('2d');
 
-    ctx.canvas.width = ContainerWidth;
-    ctx.canvas.height = ContainerHeight;
+    ctx.canvas.width = ContainerHeight
+    ctx.canvas.height = ContainerWidth;
 
     //ctx.fillStyle = "#f0f0f0";
     //ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -56,8 +56,6 @@ function EnableDisableLogCard() {
     else {
         labeldivLog.innerHTML = 'Hide Logs';
     }
-    
-/*    GetDevices();*/
 }
 
 function UpdateCameraNames(device_1_id, device_2_id, device_3_id) {
@@ -67,6 +65,11 @@ function UpdateCameraNames(device_1_id, device_2_id, device_3_id) {
     UpdateCameraName(device_3_id, 'camera_3_name', 'camera_3_wifi_icon', 'modelListCamera3', 'canvasCamera3');
 }
 
+function StartInferences(device_1_id, device_2_id, device_3_id) {
+    StartUploadInferenceResult(device_1_id);
+    StartUploadInferenceResult(device_2_id);
+    StartUploadInferenceResult(device_3_id);
+}
 
 function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canvasId) {
     GetDevices(deviceId)
@@ -78,6 +81,9 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
 
             if (jsonData.device_id == deviceId) {
                 // set name of the camera in the header
+                if (jsonData['state'].Status.Sensor == 'Streaming') {
+                    console.log(`${jsonData['property'].device_nam} is streaming`);
+                }
                 $(`#${cameraNameId}`).html(jsonData['property'].device_name);
                 $(`#${cameraNameId}`).attr('data-deviceId', deviceId);
 
@@ -85,8 +91,8 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
                     $(`#${wifiIconId}`).addClass('WiFi-Svg-Connect');
                     $(`#${wifiIconId}`).removeClass('WiFi-Svg-DisConnect');
                 } else {
-                    $(`#${wifiIconId}`).removeClass('WiFi-Svg-DisConnect');
-                    $(`#${wifiIconId}`).addClass('WiFi-Svg-Connect');
+                    $(`#${wifiIconId}`).addClass('WiFi-Svg-DisConnect');
+                    $(`#${wifiIconId}`).removeClass('WiFi-Svg-Connect');
                 }
             }
 
@@ -111,9 +117,13 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
                 var ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+                var canvasOverlay = document.getElementById(`${canvasId}Overlay`);
+                var ctxCanvasOverlay = canvasOverlay.getContext("2d");
                 var image = new Image();
                 image.onload = function () {
-                    let loadedImageWidth = image.width;
+
+                    let imageWidth = image.width;
+                    let imageHeight = image.height;
 
                     let container = $(`#${canvasId}Container`);
 
@@ -121,21 +131,20 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
                     let ContainerHeight = container.innerHeight();
  
                     let scaleFactor;
-                    if (loadedImageWidth < ContainerWidth) {
-                        scaleFactor = 1;
-                    }
-                    else {
-                        // get the scale
-                        // it is the min of the 2 ratios
-                        scaleFactor = Math.max(ContainerWidth / image.width, ContainerHeight / image.height);
-                    }
+                    // get the scale
+                    scaleFactor = Math.min(ContainerWidth / imageWidth, ContainerHeight / imageHeight);
 
                     // Finding the new width and height based on the scale factor
-                    let newWidth = image.width * scaleFactor;
-                    let newHeight = image.height * scaleFactor;
+                    let newWidth = parseInt(imageWidth * scaleFactor);
+                    let newHeight = parseInt(imageHeight * scaleFactor);
 
+                    // Adjust canvas size.  
+                    container.width = newWidth;
+                    container.height = newHeight;
                     ctx.canvas.height = newHeight;
                     ctx.canvas.width = newWidth;
+                    ctxCanvasOverlay.canvas.height = newHeight;
+                    ctxCanvasOverlay.canvas.width = newWidth;
 
                     // get the top left position of the image
                     // in order to center the image within the canvas
@@ -144,7 +153,7 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
 
                     // When drawing the image, we have to scale down the image
                     // width and height in order to fit within the canvas
-                     ctx.drawImage(image, x, y, newWidth, newHeight);
+                    ctx.drawImage(image, x, y, newWidth, newHeight);
                     //document.getElementById(`${canvasId}Container`);
                     //ctx.canvas.width = document.getElementById(`${canvasId}Container`).clientWidth;
                     //ctx.canvas.height = document.getElementById(`${canvasId}Container`).clientHeight;
@@ -157,8 +166,9 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
                 let overlayCtx = overlayCanvas.getContext('2d');
 
                 overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-
-
+                overlayCtx.strokeStyle = 'red';
+                overlayCtx.lineWidth = 1;
+                overlayCtx.strokeRect(0, 0, 100, 100);
             }
 
             let loader = document.getElementById(`${canvasId}LoaderWrapper`);
@@ -186,7 +196,32 @@ function processTelemetry(payload) {
             let labelId = `#result_label_${index}`;
             $(`${labelId}`).attr('data-inferenceCount', parseInt($(`${labelId}`).attr('data-inferenceCount')) + 1);
             $(`${labelId}`).html($(`${labelId}`).attr('data-inferenceCount'));
+
+            if (jsonData["inferenceResults"].length > 0) {
+
+                let canvas = document.getElementById(`canvasCamera${index}`);
+                let ctx = canvas.getContext('2d');
+
+                let overlayCanvas = document.getElementById(`canvasCamera${index}Overlay`);
+                let overlayCtx = overlayCanvas.getContext('2d');
+                overlayCtx.strokeStyle = 'red';
+                overlayCtx.lineWidth = 1
+                overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+                for (const key in jsonData["inferenceResults"])
+                {
+                    if (jsonData["inferenceResults"][key].Confidence > 0.7) {
+                        console.log(jsonData["inferenceResults"][key])
+
+                        let x = parseInt(canvas.width * jsonData["inferenceResults"][key].x);
+                        let y = parseInt(canvas.height * jsonData["inferenceResults"][key].y);
+                        let X = parseInt(canvas.width * jsonData["inferenceResults"][key].X);
+                        let Y = parseInt(canvas.height * jsonData["inferenceResults"][key].Y);
+
+                        overlayCtx.strokeRect(x, y, X - x, Y - y);
+                    }
+                }
+            }
         }
     }
-
 }

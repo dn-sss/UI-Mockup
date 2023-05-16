@@ -72,6 +72,33 @@ function GetDirectImage(deviceId) {
     }
 }
 
+function StartUploadInferenceResult(deviceId) {
+
+    var funcName = `${arguments.callee.name}()`;
+    console.debug("=>", funcName)
+
+    try {
+        return $.ajax({
+            async: true,
+            type: "POST",
+            url: window.location.origin + '/' + 'AITRIOSConsole/StartUploadInferenceResult',
+            data: { deviceId: deviceId }
+            //success: function (response) {
+            //    debugger            
+            //    return response;
+            //},
+            //error: function (jqXHR) {
+            //    DisplayAlert(fn, jqXHR);
+            //},
+            //complete: function (response) {
+            //    DisplayAlert(fn, "complete")
+            //}
+        });
+    } catch (err) {
+    } finally {
+    }
+}
+
 function PostToken(token) {
 
     var funcName = `${arguments.callee.name}()`;

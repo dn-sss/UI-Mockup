@@ -63,6 +63,32 @@ namespace AITRIOS_Console_Mockup.Controllers
             }
         }
 
+        private async Task<HttpResponseMessage> SendPost(string requestSegment, HttpContent? requestContent)
+        {
+            if ((_appSettings == null) || (_appSettings.ConsoleSettings == null) || (_appSettings.ConsoleSettings.BaseUrl == null))
+            {
+                throw new ArgumentException("{\"status\":\"Missing App Settings.\"}");
+            }
+
+            if (_consoleToken.response == null || ((_consoleToken.expiration - DateTime.UtcNow).Minutes < 5))
+            {
+                var ret = await GetConsoleTokenAsync();
+                if (!ret)
+                {
+                    throw new ArgumentException("{\"status\":\"Failed to get Access Token\"}");
+                }
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                Uri baseUri = new Uri(_appSettings.ConsoleSettings.BaseUrl);
+                Uri requestUri = new Uri($"{baseUri.AbsoluteUri}/{requestSegment}");
+
+                AddRequestHeader(client);
+
+                return await client.PostAsync(requestUri.AbsoluteUri, requestContent);
+            }
+        }
+
         private async Task<bool> GetConsoleTokenAsync()
         {
             if ((_appSettings == null) || (_appSettings.ConsoleSettings == null) || (_appSettings.ConsoleSettings.BaseUrlToken == null))
@@ -212,5 +238,51 @@ namespace AITRIOS_Console_Mockup.Controllers
         }
 
         #endregion
+
+        #region POST
+        //
+        // Start Inference on a specified device
+        //
+        [HttpPost]
+        public async Task<ActionResult> StartUploadInferenceResult(string deviceId)
+        {
+            try
+            {
+                var url = $"devices/{deviceId}/inferenceresults/collectstart";
+
+                var response = await SendPost(url, null);
+
+                if (response != null)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok(Json(jsonString));
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, Json(jsonString));
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Json(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Excetion in {System.Reflection.MethodBase.GetCurrentMethod().Name}() {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        #endregion
+
     }
 }
