@@ -15,14 +15,9 @@
                     </div>
                     <div class="header-camera-name font-subhead" id="camera_1_name">Loading...</div>
                     <div class="header-right-icon-frame">
-                        <span class="header-AI-Label">
-                            AI
-                        </span>
-                        <span>
-                            <div class="form-field large">
-                                <input type="checkbox" id="toggle-1" class="toggle">
-                            </div>
-                        </span>
+                        <button type="button" class="btn btn-ai-inactive" id="btnAICamera1" onclick="btnAiClick(this)" data-streaming=false>
+                            <div class="font-button-labels">AI</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -70,7 +65,7 @@
                 <hr class="separator" />
                 <div class="body-frame-bottom">
                     <div class="body-frame-label font-subhead">
-                        <img src="~/images/Image.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
                         <span class="font-subhead">Image</span>
                     </div>
                     <div class="body-frame-canvas font-labels">
@@ -99,14 +94,9 @@
                     </div>
                     <div class="header-camera-name font-subhead" id="camera_2_name">Loading...</div>
                     <div class="header-right-icon-frame">
-                        <span class="header-AI-Label">
-                            AI
-                        </span>
-                        <span>
-                            <div class="form-field large">
-                                <input type="checkbox" id="toggle-2" class="toggle">
-                            </div>
-                        </span>
+                        <button type="button" class="btn btn-ai-inactive" id="btnAICamera2" onclick="btnAiClick(this)" data-streaming=false>
+                            <div class="font-button-labels">AI</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -154,7 +144,7 @@
                 <hr class="separator" />
                 <div class="body-frame-bottom">
                     <div class="body-frame-label font-subhead">
-                        <img src="~/images/Image.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
                         <span class="font-subhead">Image</span>
                     </div>
                     <div class="body-frame-canvas font-labels">
@@ -183,14 +173,9 @@
                     </div>                    
                     <div class="header-camera-name font-subhead" id="camera_3_name">Loading...</div>
                     <div class="header-right-icon-frame">
-                        <span class="header-AI-Label">
-                            AI
-                        </span>
-                        <span>
-                            <div class="form-field large">
-                                <input type="checkbox" id="toggle-3" class="toggle">
-                            </div>
-                        </span>
+                        <button type="button" class="btn btn-ai-inactive" id="btnAICamera3" onclick="btnAiClick(this)" data-streaming=false>
+                            <div class="font-button-labels">AI</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -240,7 +225,7 @@
                 <hr class="separator" />
                 <div class="body-frame-bottom">
                     <div class="body-frame-label font-subhead">
-                        <img src="~/images/Image.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
                         <span class="font-subhead">Image</span>
                     </div>
                     <div class="body-frame-canvas font-labels">
@@ -263,10 +248,13 @@
         <div class="col-12 col-sm-12 col-md-12 my-col">
             <div class="header-frame">
                 <div class="header-frame-inside">
+                    <img src="~/images/Logs.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
                     <div class="header-camera-name font-subhead">Logs</div>
                     <div class="header-right-icon-frame">
-                        <button type="button" class="btn font-values" id="btnClearLogs" style="color:#ffffff;">
-                            <i class="far fa-trash-alt btn-fa"></i>Clear
+                        <button type="button" class="btn" id="btnClearLogs" style="color:#ffffff;display:flex">
+@*                            <i class="far fa-trash-alt btn-fa"></i>Clear*@
+                            <img src="~/images/Trash.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                            <div class="font-text-actions">Clear</div>
                         </button>
                     </div>
                 </div>
@@ -393,7 +381,5 @@
 
             StartInferences('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
         }
-
-
     </script>
 }

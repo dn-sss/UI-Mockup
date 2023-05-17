@@ -4,6 +4,8 @@
     --green: #6EDC5F;
     --white: #ffffff;
     --black: #000000;
+    --status-green: #55BE47;
+    --status-grey:#95B5D4;
     /* Toggle variables */
     --toggle-size: 24px;
     --toggle-border-thickness: 1px;
@@ -101,6 +103,37 @@ body {
     line-height: 18px !important;
     /*letter-spacing: -0.02em !important;*/
     color: #000000;
+}
+
+.font-menu-item {
+    font-family: 'Inter' !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    color: #ffffff;
+}
+
+.font-text-actions {
+    font-family: 'Inter' !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    display:flex;
+    align-items:center;
+    margin:auto;
+    color: #ffffff;
+}
+
+.font-button-labels {
+    font-family: 'Inter' !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    align-items: center;
+    margin: auto;
 }
 
 .header-frame {
@@ -278,11 +311,15 @@ body {
 }
 
 .WiFi-Svg-Connect {
-    color: var(--green);
+    color: var(--status-green);
 }
 
 .WiFi-Svg-DisConnect {
-    color: #95B5D4;
+    color: var(--status-grey);
+}
+
+.AI-Div-Running {
+
 }
 
 .form-field {
@@ -579,9 +616,32 @@ li.my-nav-header, .my-nav-header, li.nav-item, .nav-item {
     background: #ebe9e9
 }
 
-.btn-fa {
-    margin-right: 0.5em;
-    display:inline !important;
+.btn-ai-active {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 8px 10px !important;
+    width: 50px !important;
+    height: 35px !important;
+    color: var(--white) !important;
+    background-color: var(--status-green) !important;
+    border-radius: 4px !important;
+}
+
+.btn-ai-inactive {
+    box-sizing: border-box !important;
+    border: 1px solid var(--status-grey) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 8px 10px !important;
+    width: 50px !important;
+    height: 35px !important;
+    color: var(--status-grey) !important;
+    background-color: transparent !important;
+    border-radius: 4px !important;
 }
 
 Absolute Center Spinner

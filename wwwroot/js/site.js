@@ -60,9 +60,9 @@ function EnableDisableLogCard() {
 
 function UpdateCameraNames(device_1_id, device_2_id, device_3_id) {
 
-    UpdateCameraName(device_1_id, 'camera_1_name', 'camera_1_wifi_icon', 'modelListCamera1', 'canvasCamera1');
-    UpdateCameraName(device_2_id, 'camera_2_name', 'camera_2_wifi_icon', 'modelListCamera2', 'canvasCamera2');
-    UpdateCameraName(device_3_id, 'camera_3_name', 'camera_3_wifi_icon', 'modelListCamera3', 'canvasCamera3');
+    UpdateCameraName(device_1_id, 'camera_1_name', 'camera_1_wifi_icon', 'modelListCamera1', 'canvasCamera1', 'btnAICamera1');
+    UpdateCameraName(device_2_id, 'camera_2_name', 'camera_2_wifi_icon', 'modelListCamera2', 'canvasCamera2', 'btnAICamera2');
+    UpdateCameraName(device_3_id, 'camera_3_name', 'camera_3_wifi_icon', 'modelListCamera3', 'canvasCamera3', 'btnAICamera3');
 }
 
 function StartInferences(device_1_id, device_2_id, device_3_id) {
@@ -71,7 +71,7 @@ function StartInferences(device_1_id, device_2_id, device_3_id) {
     StartUploadInferenceResult(device_3_id);
 }
 
-function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canvasId) {
+function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canvasId, btnAiCamera) {
     GetDevices(deviceId)
         .done(function (response) {
             let jsonData = JSON.parse(response.value);
@@ -82,7 +82,10 @@ function UpdateCameraName(deviceId, cameraNameId, wifiIconId, modelListId, canva
             if (jsonData.device_id == deviceId) {
                 // set name of the camera in the header
                 if (jsonData['state'].Status.Sensor == 'Streaming') {
-                    console.log(`${jsonData['property'].device_nam} is streaming`);
+                    toggleAiButton(btnAiCamera, true);
+                }
+                else {
+                    toggleAiButton(btnAiCamera, false);
                 }
                 $(`#${cameraNameId}`).html(jsonData['property'].device_name);
                 $(`#${cameraNameId}`).attr('data-deviceId', deviceId);
@@ -210,7 +213,7 @@ function processTelemetry(payload) {
 
                 for (const key in jsonData["inferenceResults"])
                 {
-                    if (jsonData["inferenceResults"][key].Confidence > 0.7) {
+                    if (jsonData["inferenceResults"][key].Confidence > 0.5) {
                         console.log(jsonData["inferenceResults"][key])
 
                         let x = parseInt(canvas.width * jsonData["inferenceResults"][key].x);
@@ -224,4 +227,24 @@ function processTelemetry(payload) {
             }
         }
     }
+}
+
+function toggleAiButton(buttonId, bActive) {
+    if (bActive) {
+        $(`#${buttonId}`).attr('data-streaming', true);
+        $(`#${buttonId}`).addClass('btn-ai-active');
+        $(`#${buttonId}`).removeClass('btn-ai-inactive');
+    }
+    else {
+        $(`#${buttonId}`).attr('data-streaming', false);
+        $(`#${buttonId}`).addClass('btn-ai-inactive');
+        $(`#${buttonId}`).removeClass('btn-ai-active');
+    }
+
+}
+
+function btnAiClick(item) {
+    let bStreaming = ($(item).attr('data-streaming') == 'true');
+    toggleAiButton(item.id, !bStreaming);
+
 }
