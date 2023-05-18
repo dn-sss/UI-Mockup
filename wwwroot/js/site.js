@@ -121,7 +121,6 @@ function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId, canva
             var list = $(`#${modelListId}`);
 
             list.empty();
-            debugger
             for (var model in jsonData.models) {
                 var option = $('<option>').val(jsonData.models[model].model_version_id);
                 option.text(jsonData.models[model].model_version_id);
