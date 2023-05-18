@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="separator"/>
+                <hr class="separator" />
                 <div class="body-frame-middle">
                     <div class="body-frame-label font-subhead">
                         <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
@@ -170,7 +170,7 @@
                         <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
                         </svg>
-                    </div>                    
+                    </div>
                     <div class="header-camera-name font-subhead" id="camera_3_name">Loading...</div>
                     <div class="header-right-icon-frame">
                         <button type="button" class="btn btn-ai-inactive" id="btnAICamera3" onclick="btnAiClick(this)" data-streaming=false>
@@ -187,8 +187,7 @@
                     </div>
                     <div class="body-frame-content font-labels">
                         AI Model
-                        <select name="modelListCamera1" id="modelListCamera1" class="custom-select my-select font-values" style="color:#000000 !important">
-                            @*<select class="form-control select2 font-values my-select" style="color:#000000 !important">*@
+                        <select name="modelListCamera3" id="modelListCamera3" class="custom-select my-select font-values" style="color:#000000 !important">
                         </select>
                     </div>
                     <div class="body-frame-content font-labels" style="display:none">
@@ -252,7 +251,6 @@
                     <div class="header-camera-name font-subhead">Logs</div>
                     <div class="header-right-icon-frame">
                         <button type="button" class="btn" id="btnClearLogs" style="color:#ffffff;display:flex">
-@*                            <i class="far fa-trash-alt btn-fa"></i>Clear*@
                             <img src="~/images/Trash.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
                             <div class="font-text-actions">Clear</div>
                         </button>
@@ -342,8 +340,8 @@
             //const observer = new ResizeObserver(onResize);
             //observer.observe(canvas);
 
-            UpdateCameraNames('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
-           
+            UpdateAllCameraData('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+
         });
 
         function getDate(dateString) {
