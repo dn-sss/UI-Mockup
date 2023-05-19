@@ -34,7 +34,7 @@ function initCanvas(canvasId) {
     overlayCtx.textAlign = "center";
 
     // Display a message
-    overlayCtx.fillText("Loading Image", parseInt(overlayCanvas.width / 2), parseInt((overlayCanvas.height/3) * 2));
+    overlayCtx.fillText("Loading Image", parseInt(overlayCanvas.width / 2), parseInt((overlayCanvas.height / 3) * 2));
 }
 
 //
@@ -71,17 +71,20 @@ function UpdateAllCameraData(device_1_id, device_2_id, device_3_id) {
 
     UpdateCameraInfo(device_1_id, 'camera_1_name', 'camera_1_wifi_icon', 'modelListCamera1', 'canvasCamera1', 'btnAICamera1');
     UpdateCameraInfo(device_2_id, 'camera_2_name', 'camera_2_wifi_icon', 'modelListCamera2', 'canvasCamera2', 'btnAICamera2');
-    UpdateCameraInfo(device_3_id, 'camera_3_name', 'camera_3_wifi_icon', 'modelListCamera3', 'canvasCamera3', 'btnAICamera3');
+    //Disabled for EVS
+    //UpdateCameraInfo(device_3_id, 'camera_3_name', 'camera_3_wifi_icon', 'modelListCamera3', 'canvasCamera3', 'btnAICamera3');
 }
 
 //
 // Retrieve and update UI for a cameara.
 //
-function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId, canvasId, btnAiCamera) {
+async function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId, canvasId, btnAiCameraId) {
 
     // Get device information
+    console.log("==> GetDevices");
     GetDevices(deviceId)
-        .done(function (response) {
+        .done(async function (response) {
+            console.log("<== GetDevices");
             let jsonData = JSON.parse(response.value);
             let jsonPretty = JSON.stringify(jsonData, undefined, 2);
 
@@ -93,11 +96,13 @@ function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId, canva
 
                 // if sensor status is streaming, inference is running.
                 // Update "AI" button in the header
+                $(`#${btnAiCameraId}`).attr('data-deviceId', deviceId);
+
                 if (jsonData['state'].Status.Sensor == 'Streaming') {
-                    toggleAiButton(btnAiCamera, true);
+                    toggleAiButton(btnAiCameraId, true);
                 }
                 else {
-                    toggleAiButton(btnAiCamera, false);
+                    toggleAiButton(btnAiCameraId, false);
                 }
 
                 // Update UI with Camera's display name (vs. Device ID)
@@ -133,73 +138,10 @@ function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId, canva
     // Should call this onlyl when the device is connected.
     GetDirectImage(deviceId)
         .done(function (response) {
-
             let jsonData = JSON.parse(response.value);
+            ProcessGetDirectImageResponse(canvasId, jsonData);
+        });
 
-            if (jsonData.result == "SUCCESS") {
-
-                // work in progress.  Image size/aspect ratio breaks when window is resized.
-                var canvas = document.getElementById(canvasId);
-                var ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                var canvasOverlay = document.getElementById(`${canvasId}Overlay`);
-                var ctxCanvasOverlay = canvasOverlay.getContext("2d");
-                var image = new Image();
-                image.onload = function () {
-
-                    let imageWidth = image.width;
-                    let imageHeight = image.height;
-
-                    let container = $(`#${canvasId}Container`);
-
-                    let ContainerWidth = container.innerWidth();
-                    let ContainerHeight = container.innerHeight();
- 
-                    let scaleFactor;
-                    // get the scale
-                    scaleFactor = Math.min(ContainerWidth / imageWidth, ContainerHeight / imageHeight);
-
-                    // Finding the new width and height based on the scale factor
-                    let newWidth = parseInt(imageWidth * scaleFactor);
-                    let newHeight = parseInt(imageHeight * scaleFactor);
-
-                    // Adjust canvas size.  
-                    container.width = newWidth;
-                    container.height = newHeight;
-                    ctx.canvas.height = newHeight;
-                    ctx.canvas.width = newWidth;
-                    ctxCanvasOverlay.canvas.height = newHeight;
-                    ctxCanvasOverlay.canvas.width = newWidth;
-
-                    // get the top left position of the image
-                    // in order to center the image within the canvas
-                    let x = (canvas.width / 2) - (newWidth / 2);
-                    let y = (canvas.height / 2) - (newHeight / 2);
-
-                    // When drawing the image, we have to scale down the image
-                    // width and height in order to fit within the canvas
-                    ctx.drawImage(image, x, y, newWidth, newHeight);
-                    //document.getElementById(`${canvasId}Container`);
-                    //ctx.canvas.width = document.getElementById(`${canvasId}Container`).clientWidth;
-                    //ctx.canvas.height = document.getElementById(`${canvasId}Container`).clientHeight;
-                    //ctx.drawImage(image, 0, 0, image.width, image.height);
-
-                };
-                image.src = `data:image/jpeg;base64,${jsonData.contents}`;
-
-                let overlayCanvas = document.getElementById(`${canvasId}Overlay`);
-                let overlayCtx = overlayCanvas.getContext('2d');
-
-                overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-                overlayCtx.strokeStyle = 'red';
-                overlayCtx.lineWidth = 1;
-                overlayCtx.strokeRect(0, 0, 100, 100);
-            }
-
-            let loader = document.getElementById(`${canvasId}LoaderWrapper`);
-            loader.style.display = "none";
-    });
 }
 
 //
@@ -219,12 +161,9 @@ function processTelemetry(payload) {
     // Find results section based on device id match.
     let deviceId = jsonData["DeviceId"];
 
-    for (index = 1; index < 4; index++)
-    {
-        if ($(`#camera_${index}_name`).attr('data-deviceId') == deviceId)
-        {
+    for (index = 1; index < 4; index++) {
+        if ($(`#camera_${index}_name`).attr('data-deviceId') == deviceId) {
             let labelId = `#result_label_${index}`;
-
             // update Results => Inference Results UI
             $(`${labelId}`).attr('data-inferenceCount', parseInt($(`${labelId}`).attr('data-inferenceCount')) + 1);
             // remember the last count as an attribute
@@ -242,11 +181,10 @@ function processTelemetry(payload) {
                 overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
 
                 // Loop through inference results
-                for (const key in jsonData["inferenceResults"])
-                {
+                for (const key in jsonData["inferenceResults"]) {
                     // work in progress
                     // Need a way to configure confidence level threshold (Global)
-                    if (jsonData["inferenceResults"][key].Confidence > 0.5) {
+                    if (jsonData["inferenceResults"][key].Confidence > 0.1) {
 
                         // draw a bounding box
                         let x = parseInt(canvas.width * jsonData["inferenceResults"][key].x);
@@ -258,6 +196,13 @@ function processTelemetry(payload) {
                     }
                 }
             }
+            let canvasId = `canvasCamera${index}`;
+
+            GetDirectImage(deviceId)
+                .done(function (response) {
+                    let jsonData = JSON.parse(response.value);
+                    ProcessGetDirectImageResponse(canvasId ,jsonData);
+                });
         }
     }
 }
@@ -281,7 +226,7 @@ function toggleAiButton(buttonId, bActive) {
 //
 // Called from button click event hander.
 // Placeholder for additional control (call StartUploadInferenceResult())
-function btnAiClick(item) {
+function btnAiClick2(item) {
     let bStreaming = ($(item).attr('data-streaming') == 'true');
 
     // Work in progress
@@ -292,12 +237,132 @@ function btnAiClick(item) {
     toggleAiButton(item.id, !bStreaming);
 }
 
+function btnAiClick(item) {
+    let bStreaming = ($(item).attr('data-streaming') == 'true');
+
+
+
+    // Work in progress
+    // 1. Should check current sensor status
+    // 2. If not "streaming", call StartUploadInferenceResult()
+    // 3. If "streaming", do nothing or display warning?
+
+
+
+    if (bStreaming == 'true'); // do warning or nothing?
+    else {
+        StartUploadInferenceResult($(item).attr('data-deviceId'));
+    }
+    toggleAiButton(item.id, !bStreaming);
+}
+
 //
 // Called when "Start Demo" button in Navbar is clicked.
 // Calls StartUploadInferenceResult() on all devices.
 //
-function StartInferences(device_1_id, device_2_id, device_3_id) {
+function StartAllInferences(device_1_id, device_2_id, device_3_id) {
     StartUploadInferenceResult(device_1_id);
     StartUploadInferenceResult(device_2_id);
-    StartUploadInferenceResult(device_3_id);
+    //StartUploadInferenceResult(device_3_id);
+}
+
+//
+// Called when "Stop Demo" button in Navbar is clicked.
+// Calls StartUploadInferenceResult() on all devices.
+//
+function StopAllInference(device_1_id, device_2_id, device_3_id) {
+    StopUploadInferenceResult(device_1_id);
+    StopUploadInferenceResult(device_2_id);
+    //StopUploadInferenceResult(device_3_id);
+}
+
+function GetNumImages(deviceIds) {
+
+    GetCommandParameterFile()
+        .done(async function (response) {
+
+            let jsonData = JSON.parse(response.value);
+
+            for (var index in jsonData.parameter_list) {
+                var parameter = jsonData.parameter_list[index];
+
+                for (var device in jsonData.parameter_list[index].device_ids) {
+                    if (deviceIds.includes(jsonData.parameter_list[index].device_ids[device]))
+                    {
+                        console.log(`${jsonData.parameter_list[index].device_ids[device]}`)
+                        for (var command in jsonData.parameter_list[index].parameter.commands) {
+                            var numImages = jsonData.parameter_list[index].parameter.commands[command].parameters.NumberOfImages;
+                            imageCountMap.set(jsonData.parameter_list[index].device_ids[device], numImages);
+                        }
+                    }
+                }
+            }
+        });
+}
+
+function ProcessGetDirectImageResponse(canvasId, jsonData) {
+
+    if (jsonData.result == "SUCCESS") {
+
+        // work in progress.  Image size/aspect ratio breaks when window is resized.
+        var canvas = document.getElementById(canvasId);
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        var canvasOverlay = document.getElementById(`${canvasId}Overlay`);
+        var ctxCanvasOverlay = canvasOverlay.getContext("2d");
+        var image = new Image();
+        image.onload = function () {
+
+            let imageWidth = image.width;
+            let imageHeight = image.height;
+
+            let container = $(`#${canvasId}Container`);
+
+            let ContainerWidth = container.innerWidth();
+            let ContainerHeight = container.innerHeight();
+
+            let scaleFactor;
+            // get the scale
+            scaleFactor = Math.min(ContainerWidth / imageWidth, ContainerHeight / imageHeight);
+
+            // Finding the new width and height based on the scale factor
+            let newWidth = parseInt(imageWidth * scaleFactor);
+            let newHeight = parseInt(imageHeight * scaleFactor);
+
+            // Adjust canvas size.  
+            container.width = newWidth;
+            container.height = newHeight;
+            ctx.canvas.height = newHeight;
+            ctx.canvas.width = newWidth;
+            ctxCanvasOverlay.canvas.height = newHeight;
+            ctxCanvasOverlay.canvas.width = newWidth;
+
+            // get the top left position of the image
+            // in order to center the image within the canvas
+            let x = (canvas.width / 2) - (newWidth / 2);
+            let y = (canvas.height / 2) - (newHeight / 2);
+
+            // When drawing the image, we have to scale down the image
+            // width and height in order to fit within the canvas
+            ctx.drawImage(image, x, y, newWidth, newHeight);
+            //document.getElementById(`${canvasId}Container`);
+            //ctx.canvas.width = document.getElementById(`${canvasId}Container`).clientWidth;
+            //ctx.canvas.height = document.getElementById(`${canvasId}Container`).clientHeight;
+            //ctx.drawImage(image, 0, 0, image.width, image.height);
+
+        };
+        image.src = `data:image/jpeg;base64,${jsonData.contents}`;
+
+        let overlayCanvas = document.getElementById(`${canvasId}Overlay`);
+        let overlayCtx = overlayCanvas.getContext('2d');
+
+        overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        overlayCtx.strokeStyle = 'red';
+        overlayCtx.lineWidth = 1;
+        overlayCtx.strokeRect(0, 0, 100, 100);
+    }
+
+    let loader = document.getElementById(`${canvasId}LoaderWrapper`);
+    loader.style.display = "none";
 }

@@ -268,9 +268,47 @@ namespace AITRIOS_Console_Mockup.Controllers
             }
         }
 
-        // to do
-        // Add GetCommandParameterFile()
-        // 
+        //
+        // Get the image of a specified device in real-time.
+        // This API is for pseudo-streaming.
+        //
+        [HttpGet]
+        public async Task<ActionResult> GetCommandParameterFile()
+        {
+            try
+            {
+                var url = $"command_parameter_files";
+
+                var response = await SendGet(url);
+
+                if (response != null)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok(Json(jsonString));
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, Json(jsonString));
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Json(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Excetion in {System.Reflection.MethodBase.GetCurrentMethod().Name}() {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
 
         #endregion
 

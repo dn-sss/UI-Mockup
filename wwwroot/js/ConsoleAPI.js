@@ -15,24 +15,25 @@ function GetDevices(deviceId) {
 
     var funcName = `${arguments.callee.name}()`;
     console.debug("=>", funcName)
+    const start = Date.now();
 
     try {
-
-        return  $.ajax({
+        return $.ajax({
             async: true,
             type: "GET",
             url: window.location.origin + '/' + 'AITRIOSConsole/GetDevices',
-            data: { deviceId: deviceId }
-            //success: function (response) {
-            //    debugger            
-            //    return response;
-            //},
-            //error: function (jqXHR) {
-            //    DisplayAlert(fn, jqXHR);
-            //},
-            //complete: function (response) {
-            //    DisplayAlert(fn, "complete")
-            //}
+            data: { deviceId: deviceId },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`${funcName} success ${end - start} ms`);
+            },
+            error: function (jqXHR) {
+                const end = Date.now();
+                console.log(`${funcName} error ${end - start} ms`);
+        //    },
+        //    complete: function (response) {
+        //        console.log(`${funcName} complete`);
+            }
         });
     } catch (err) {
     } finally {
@@ -46,25 +47,29 @@ function GetDirectImage(deviceId) {
 
     var funcName = `${arguments.callee.name}()`;
     console.debug("=>", funcName)
+    const start = Date.now();
 
     try {
 
-        return $.ajax({
+         return $.ajax({
             async: true,
             type: "GET",
             url: window.location.origin + '/' + 'AITRIOSConsole/GetDirectImage',
-            data: { deviceId: deviceId }
-            //success: function (response) {
-            //    debugger            
-            //    return response;
-            //},
-            //error: function (jqXHR) {
-            //    DisplayAlert(fn, jqXHR);
+            data: { deviceId: deviceId },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`${funcName} success ${end - start} ms`);
+            },
+            error: function (jqXHR) {
+                const end = Date.now();
+                console.log(`${funcName} error ${end - start} ms`);
             //},
             //complete: function (response) {
-            //    DisplayAlert(fn, "complete")
-            //}
+            //    console.log(`${funcName} complete`);
+            }
         });
+
+        return response
     } catch (err) {
     } finally {
     }
@@ -74,26 +79,27 @@ function GetDirectImage(deviceId) {
 // Calls StartUploadInferenceResult() API through AITRIOSConsole Controller
 //
 function StartUploadInferenceResult(deviceId) {
-
     var funcName = `${arguments.callee.name}()`;
     console.debug("=>", funcName)
+    const start = Date.now();
 
     try {
         return $.ajax({
             async: true,
             type: "POST",
             url: window.location.origin + '/' + 'AITRIOSConsole/StartUploadInferenceResult',
-            data: { deviceId: deviceId }
-            //success: function (response) {
-            //    debugger            
-            //    return response;
-            //},
-            //error: function (jqXHR) {
-            //    DisplayAlert(fn, jqXHR);
+            data: { deviceId: deviceId },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`${funcName} success ${end - start} ms`);
+
+            },
+            error: function (jqXHR) {
+                console.log(`${funcName} error`);
             //},
             //complete: function (response) {
-            //    DisplayAlert(fn, "complete")
-            //}
+            //    console.log(`${funcName} complete`);
+            }
         });
     } catch (err) {
     } finally {
@@ -107,26 +113,66 @@ function StopUploadInferenceResult(deviceId) {
 
     var funcName = `${arguments.callee.name}()`;
     console.debug("=>", funcName)
+    const start = Date.now();
 
     try {
         return $.ajax({
             async: true,
             type: "POST",
             url: window.location.origin + '/' + 'AITRIOSConsole/StopUploadInferenceResult',
-            data: { deviceId: deviceId }
-            //success: function (response) {
-            //    debugger            
-            //    return response;
-            //},
-            //error: function (jqXHR) {
-            //    DisplayAlert(fn, jqXHR);
+            data: { deviceId: deviceId },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`${funcName} success ${end - start} ms`);
+            },
+            error: function (jqXHR) {
+                const end = Date.now();
+                console.log(`${funcName} error ${end - start} ms`);
             //},
             //complete: function (response) {
-            //    DisplayAlert(fn, "complete")
-            //}
+            //    console.log(`${funcName} complete`);
+            }
         });
+
+        return response;
     } catch (err) {
     } finally {
     }
 }
+
+//
+// Calls GetCommandParameterFile() API through AITRIOSConsole Controller
+//
+function GetCommandParameterFile() {
+
+    var funcName = `${arguments.callee.name}()`;
+    console.debug("=>", funcName)
+    const start = Date.now();
+
+    try {
+        return $.ajax({
+            async: true,
+            type: "GET",
+            url: window.location.origin + '/' + 'AITRIOSConsole/GetCommandParameterFile',
+            data: { },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`${funcName} success ${end - start} ms`);
+            },
+            error: function (jqXHR) {
+                const end = Date.now();
+                console.log(`${funcName} error ${end - start} ms`);
+                debugger
+                //},
+                //complete: function (response) {
+                //    console.log(`${funcName} complete`);
+            }
+        });
+
+        return response;
+    } catch (err) {
+    } finally {
+    }
+}
+
 

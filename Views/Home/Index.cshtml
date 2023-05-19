@@ -5,7 +5,10 @@
 <div class="container-fluid">
     <div class="row" style="padding-top:28px;">
         <!-- Camera 1 -->
+        <!-- For EVS only 2 columns
         <div class="col-12 col-sm-4 col-md-4 my-col">
+        -->
+        <div class="col-12 col-sm-6 col-md-6 my-col">
             <div class="header-frame">
                 <div class="header-frame-inside">
                     <div id="camera_1_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
@@ -84,7 +87,10 @@
             </div>
         </div>
         <!-- Camera 2-->
+        <!-- For EVS only 2 columns
         <div class="col-12 col-sm-4 col-md-4 my-col">
+        -->
+        <div class="col-12 col-sm-6 col-md-6 my-col">
             <div class="header-frame">
                 <div class="header-frame-inside">
                     <div id="camera_2_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
@@ -163,6 +169,7 @@
             </div>
         </div>
         <!-- Camera 3-->
+        <!-- disabled for EVS
         <div class="col-12 col-sm-4 col-md-4 my-col">
             <div class="header-frame">
                 <div class="header-frame-inside">
@@ -242,6 +249,7 @@
                 </div>
             </div>
         </div>
+        -->
     </div>
     <div id="divLog" class="row" style="padding-top:28px;">
         <div class="col-12 col-sm-12 col-md-12 my-col">
@@ -284,15 +292,22 @@
         let sliderThresholdValueCamera2 = document.getElementById("SliderConfidenceLevelCamera2Label");
         let sliderThresholdValueCamera3 = document.getElementById("SliderConfidenceLevelCamera3Label");
         let signalRHub;
+        let imageCountMap = new Map();
+        let camera_1_pending_inference_Count = 0;
+        let camera_2_pending_inference_Count = 0;
 
         window.onload = function () {
         };
 
         $(document).ready(function () {
 
-            let camera1_id = '@(ViewData["Camera1_ID"])';
-            let camera2_id = '@(ViewData["Camera2_ID"])'
-            let camera3_id = '@(ViewData["Camera3_ID"])';
+            const deviceIds = [];
+            let camera1_id = '@(ViewData["Camera_1_ID"])';
+            let camera2_id = '@(ViewData["Camera_2_ID"])';
+            let camera3_id = '@(ViewData["Camera_3_ID"])';
+            deviceIds.push(camera1_id);
+            deviceIds.push(camera2_id);
+            //            deviceIds.push('@(ViewData["Camera1_ID"])');
 
             //
             //
@@ -315,7 +330,8 @@
 
             initCanvas('canvasCamera1');
             initCanvas('canvasCamera2');
-            initCanvas('canvasCamera3');
+            //disabled for EVS
+            //initCanvas('canvasCamera3');
 
             document.getElementById("txAreaStatus").value = '';
 
@@ -334,13 +350,20 @@
                 processTelemetry(payload);
             });
 
-            new ResizeObserver(canvasResize).observe(document.getElementById('canvasCamera3Container'));
+            // new ResizeObserver(canvasResize).observe(document.getElementById('canvasCamera3Container'));
 
             //const canvas = document.getElementsByTagName('canvasCamera3Container')[0];
             //const observer = new ResizeObserver(onResize);
             //observer.observe(canvas);
 
             UpdateAllCameraData('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+
+            GetNumImages(deviceIds)
+
+            camera_1_pending_inference_Count = imageCountMap.get(camera1_id);
+            camera_2_pending_inference_Count = imageCountMap.get(camera2_id);
+            //camera_3_pending_inference_Count = imageCountMap.get(camera3_id);
+
 
         });
 
@@ -375,9 +398,14 @@
             //ctx.putImageData(data);
         }
 
-        function StartInference() {
+        function StartInferences() {
 
-            StartInferences('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+            StartAllInferences('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+        }
+
+        function StopInferences() {
+
+            StopAllInference('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
         }
     </script>
 }
