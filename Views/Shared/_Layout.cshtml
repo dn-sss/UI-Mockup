@@ -4,48 +4,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AITRIOS_Console_Mockup</title>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet'>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AITRIOS_Console_Mockup.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/alt/adminlte.light.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap2/bootstrap-switch.min.css" integrity="sha512-lANJTDwF23Xos7T5Q7SNbZ7dFxLG8YSQJ2qCGrav0Fhe5vns60+tUECZv+9udXdKiX3/YTWt++tEKyEcuZv4dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @@keyframes spinner {
+            0% {
+                transform: translate3d(-50%, -50%, 0) rotate(0deg);
+            }
+
+            100% {
+                transform: translate3d(-50%, -50%, 0) rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 
     <div class="wrapper">
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="images/AITRIOS-Logo-White.svg" alt="AITRIOS Logo" >
+        </div>
+
         <!-- Top Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark my-navbar-dark">
+        <nav class="main-header navbar navbar-expand navbar-dark my-navbar">
             <!-- Top Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block my-li" id="li_dashboard">
-                    <a href="~/Home/" class="nav-link">Dashboard</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block my-li" id="li_advanced">
-                    <a href="~/Home/Advanced" class="nav-link">Advanced</a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><img src="images/Humburger.svg" alt="Menu" width="18" height="12"></a>
                 </li>
             </ul>
 
             <!-- Top Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span id="navbarNotificationSpan" class="badge badge-warning navbar-badge"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span id="navbarAlertHeader" class="dropdown-header"></span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i>Last Alert
-                            <span id="navbarAlertSpan" class="float-right text-muted text-sm"></span>
-                        </a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -55,74 +50,58 @@
         </nav>
 
         <!-- Side Bar -->
-        <aside class="main-sidebar sidebar-light-primary elevation-1 my-sidebar" style="background-color:#f0f0f0;color: #3e445c">
+        <aside class="main-sidebar sidebar-dark elevation-1 my-sidebar">
             <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link my-brand-link">
-                <img src="~/images/AITRIOS-Logo-White.png" alt="AITRIOS Console" class="brand-image elevation-0 my-brand-image">
-                <span class="brand-text font-weight-light my-brand-text">Console</span>
+            <a href="#" class="brand-link my-brand-link my-brand-image-wrapper">
+                <img src="~/images/AITRIOS-Logo-White.svg" alt="AITRIOS" class="brand-image elevation-0 my-brand-image" width="29" height="38">
+                <span class="brand-text font-subhead my-brand-text" style="padding-left:0.3em">AITRIOS</span>
             </a>
 
             <div class="sidebar my-sidebar">
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-header my-nav-header">Device Management</li>
+                    <ul class="nav nav-pills nav-sidebar flex-column my-nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
-                                <i class="nav-icon fas fa-laptop-medical navbar-fa"></i>
-                                <p>Enroll Devices</p>
+                            <a href="#" class="nav-link" onclick="StartInferences();return false;">
+                                <img src="~/images/Play.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                                <p class="font-menu-item">Start Demo</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
-                                <i class="nav-icon fas fa-cogs navbar-fa"></i>
-                                <p>Manage Devices</p>
-                            </a>
-                        </li>
-                        <li class="nav-header my-nav-header">AI Model</li>
-                        <li class="nav-item">
-                            <a href="https://devicecatalog.azure.com/devices?certificationBadgeTypes=PnP" target="_blank" class="nav-link">
-                                <i class="nav-icon fas fa-folder-plus navbar-fa"></i>
-                                <p>Create Model</p>
+                            <a href="#" class="nav-link" onclick="StopInferences();return false;">
+                                <img src="~/images/Stop.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                                <p class="font-menu-item">Stop Demo</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://devicecatalog.azure.com/devices?certificationBadgeTypes=PnP" target="_blank" class="nav-link">
-                                <i class="nav-icon fas fa-brain navbar-fa"></i>
-
-                                <p>Train Model</p>
+                            <a href="../../index.html" class="nav-link font-labels">
+                                <img src="~/images/Cloud.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                                <p class="font-menu-item">Check Connectivity</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://devicecatalog.azure.com/devices?certificationBadgeTypes=PnP" target="_blank" class="nav-link">
-                                <i class="nav-icon fas fa-cloud-download-alt navbar-fa"></i>
-                                <p>Deploy Model</p>
+                            <a href="#" class="nav-link" onclick="EnableDisableLogCard();return false;">
+                                <img src="~/images/Settings.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                                <p id="labeltxAreaStatus" class="font-menu-item">Display Logs</p>
                             </a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </aside>
-        <div class="content-wrapper my-content-wrapper" style="background-color: #f0f0f0">
+        <div class="content-wrapper my-content-wrapper">
             <section class="content">
                 @RenderBody()
             </section>
         </div>
-        <footer class="main-footer my-footer">
-            <div class="float-right d-none d-sm-inline">
-                AITRIOS Console
-            </div>
-            <strong>Copyright &copy; 2019-2023 <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></strong> All rights reserved.
-        </footer>
-        <aside class="control-sidebar control-sidebar-dark control-sidebar-light">
-            <!-- Control sidebar content goes here -->
-        </aside>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ConsoleAPI.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js" integrity="sha512-J+763o/bd3r9iW+gFEqTaeyi+uAphmzkE/zU8FxY6iAvD3nQKXa+ZAWkBI9QS9QkYEKddQoiy0I5GDxKf/ORBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

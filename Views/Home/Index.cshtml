@@ -3,182 +3,286 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <div class="card card-default my-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fas fa-tasks"></i>
-                        Dashboard
-                    </h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-3 col-3">
-                            <!-- small box -->
-                            <div class="small-box bg-success" style="background-color:#3E455C!important">
-                                <div class="inner">
-                                    <h3>150</h3>
-
-                                    <p>Total Devices</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">View List <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-3">
-                            <!-- small box -->
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>148</h3>
-
-                                    <p>
-                                        <i class="fas fa-wifi my-fa" style="color:white !important"></i>
-                                        Oneline Devices
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">View List <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-gray">
-                                <div class="inner">
-                                    <h3>10</h3>
-
-                                    <p>
-                                        <i class="fas fa-wifi my-fa" style="color:darkgray !important"></i>
-                                        Offline Devices
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">View List <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-danger">
-                                <div class="inner">
-                                    <h3>1</h3>
-                                    <p>
-                                        <i class="far fa-times-circle my-fa" style="color:white !important"></i>
-                                        Failed Devices
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">View List <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
+    <div class="row" style="padding-top:28px;">
+        <!-- Camera 1 -->
+        <!-- For EVS only 2 columns
+        <div class="col-12 col-sm-4 col-md-4 my-col">
+        -->
+        <div class="col-12 col-sm-6 col-md-6 my-col">
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div id="camera_1_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
+                        <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
+                        </svg>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card card-primary collapsed-card">
-                <div class="card-header" style="padding:0!important">
-                    <div class="small-box bg-success" style="background-color:#3E455C!important">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>
-                                <i class="fas fa-cloud-download-alt"></i>
-                                Deployment
-                            </p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-plus"></i>
+                    <div class="header-camera-name font-subhead" id="camera_1_name">Loading...</div>
+                    <div class="header-right-icon-frame">
+                        <button type="button" class="btn btn-ai-inactive" id="camera_1_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
+                            <div class="font-button-labels">AI</div>
                         </button>
                     </div>
-
-                    <div class="card-tools">
+                </div>
+            </div>
+            <div class="body-frame">
+                <div class="body-frame-top">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Brain.svg" alt="AI" width="20" height="20" style="vertical-align: text-top;">
+                        <span class="font-subhead">AI Model</span>
                     </div>
-                    <!-- /.card-tools -->
+                    <div class="body-frame-content font-labels">
+                        AI Model
+                        <select name="camera_1_model_list" id="camera_1_model_list" class="custom-select my-select font-values" style="color:#000000 !important">
+                        </select>
+                    </div>
+                    <div class="body-frame-content font-labels" style="display:none">
+                        Current Threshold
+                        <div class="slider-frame">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="camera_3_confidence_slider">
+                            <div class="slider-label-frame font-values" id="camera_1_confidence_sliderLabel">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    The body of the card
+                <hr class="separator" />
+                <div class="body-frame-middle">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Results</span>
+                    </div>
+                    <div class="body-frame-content body-frame-results font-labels">
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                Inference Results
+                                <div class="result_label font-values" id="camera_1_result_label" data-inferenceCount=0>0</div>
+                            </div>
+                        </div>
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                People Detected
+                                <div class="result_label font-values">test</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
+                <hr class="separator" />
+                <div class="body-frame-bottom">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <div class="header-camera-name font-subhead">Image</div>
 
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success" style="background-color:#3E455C!important">
-                <div class="inner">
-                    <h3>150</h3>
-
-                    <p>
-                        <i class="fas fa-brain"></i>
-                        Models
-                    </p>
+                        <div class="header-right-icon-frame">
+                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                                <div class="font-button-labels">Refresh</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="body-frame-canvas font-labels">
+                        <div class="container loader-parent my-div-image" id="camera_1_canvas_container">
+                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
+                                <canvas class="my-canvas" id="camera_1_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_1_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
+                            </div>
+                            <div id="camera_1_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
+                                <div class="canvasLoader">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        <!-- Camera 2-->
+        <!-- For EVS only 2 columns
+        <div class="col-12 col-sm-4 col-md-4 my-col">
+        -->
+        <div class="col-12 col-sm-6 col-md-6 my-col">
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div id="camera_2_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
+                        <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="header-camera-name font-subhead" id="camera_2_name">Loading...</div>
+                    <div class="header-right-icon-frame">
+                        <button type="button" class="btn btn-ai-inactive" id="camera_2_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
+                            <div class="font-button-labels">AI</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="body-frame">
+                <div class="body-frame-top">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Brain.svg" alt="AI" width="20" height="20" style="vertical-align: text-top;">
+                        <span class="font-subhead">AI Model</span>
+                    </div>
+                    <div class="body-frame-content font-labels">
+                        AI Model
+                        <select name="camera_2_model_list" id="camera_2_model_list" class="custom-select my-select font-values">
+                        </select>
+                    </div>
+                    <div class="body-frame-content font-labels" style="display:none">
+                        Current Threshold
+                        <div class="slider-frame">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="camera_2_confidence_slider">
+                            <div class="slider-label-frame font-values" id="camera_2_confidence_sliderLabel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-middle">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="header-camera-name font-subhead">Results</span>
+                    </div>
+                    <div class="body-frame-content body-frame-results font-labels">
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                Inference Results
+                                <div class="result_label font-values" id="camera_2_result_label" data-inferenceCount=0>0</div>
+                            </div>
+                        </div>
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                People Detected
+                                <div class="result_label font-values">test</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-bottom">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <div class="header-camera-name font-subhead">Image</div>
+                        <div class="header-right-icon-frame">
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                                <div class="font-button-labels">Refresh</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="body-frame-canvas font-labels">
+                        <div class="container loader-parent my-div-image" id="camera_2_canvas_container">
+                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
+                                <canvas class="my-canvas" id="camera_2_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_2_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
+                            </div>
+                            <div id="camera_2_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
+                                <div class="canvasLoader">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Camera 3-->
+        <!-- disabled for EVS
+        <div class="col-12 col-sm-4 col-md-4 my-col">
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <div id="camera_3_wifi_icon" class="WiFi-Svg-DisConnect" width="24" height="24">
+                        <svg class="Wifi-Svg" width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <div class="header-camera-name font-subhead" id="camera_3_name">Loading...</div>
+                    <div class="header-right-icon-frame">
+                        <button type="button" class="btn btn-ai-inactive" id="camera_3_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
+                            <div class="font-button-labels">AI</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="body-frame">
+                <div class="body-frame-top">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Brain.svg" alt="AI" width="20" height="20" style="vertical-align: text-top;">
+                        <span class="font-subhead">AI Model</span>
+                    </div>
+                    <div class="body-frame-content font-labels">
+                        AI Model
+                        <select name="camera_3_model_list" id="camera_3_model_list" class="custom-select my-select font-values" style="color:#000000 !important">
+                        </select>
+                    </div>
+                    <div class="body-frame-content font-labels" style="display:none">
+                        Current Threshold
+                        <div class="slider-frame">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="camera_3_confidence_slider">
+                            <div class="slider-label-frame font-values" id="camera_3_confidence_sliderLabel">
+                                12%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-middle">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
+                        <span class="font-subhead">Results</span>
+                    </div>
+                    <div class="body-frame-content body-frame-results font-labels">
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                Inference Results
+                                <div class="result_label font-values" id="camera_3_result_label" data-inferenceCount=0>0</div>
+                            </div>
+                        </div>
+                        <div class="body-frame-result">
+                            <div class="font-labels">
+                                People Detected
+                                <div class="result_label font-values">test</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="separator" />
+                <div class="body-frame-bottom">
+                    <div class="body-frame-label font-subhead">
+                        <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
+                        <div class="header-image-label font-subhead">Image</div>
+                        <div class="header-right-icon-frame">
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                                <div class="font-button-labels">Refresh</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="body-frame-canvas font-labels">
+                        <div class="container loader-parent my-div-image" id="camera_3_canvas_container">
+                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
+                                <canvas class="my-canvas" id="camera_3_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_3_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
+                            </div>
+                            <div id="camera_3_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
+                                <div class="canvasLoader">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
     </div>
-
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card card-default my-card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fas fa-tasks"></i>
-                        Tasks
-                    </h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="callout callout-success">
-                        <p>
-                            Devices
-                        </p>
-                        <a class="btn btn-app my-btn-app">
-                            <i class="fas fa-laptop-medical"></i> Enroll
-                        </a>
-                        <a class="btn btn-app my-btn-app">
-                            <i class="fas fa-cogs"></i> Manage
-                        </a>
-                    </div>
-                    <div class="callout callout-success my-callout-0-bottom-margin">
-                        <p>
-                            AI Models
-                        </p>
-                        <a class="btn btn-app my-btn-app">
-                            <i class="fas fa-folder-plus"></i> Create
-                        </a>
-                        <a class="btn btn-app my-btn-app">
-                            <i class="fas fa-brain"></i> Train
-                        </a>
-                        <a class="btn btn-app my-btn-app">
-                            <i class="fas fa-cloud-download-alt"></i> Deploy
-                        </a>
+    <div id="divLog" class="row" style="padding-top:28px;">
+        <div class="col-12 col-sm-12 col-md-12 my-col">
+            <div class="header-frame">
+                <div class="header-frame-inside">
+                    <img src="~/images/Logs.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                    <div class="header-camera-name font-subhead">Logs</div>
+                    <div class="header-right-icon-frame">
+                        <button type="button" class="btn" id="btnClearLogs" style="color:#ffffff;display:flex">
+                            <img src="~/images/Trash.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
+                            <div class="font-text-actions">Clear</div>
+                        </button>
                     </div>
                 </div>
-                <!-- /.card-body -->
+            </div>
+            <div class="body-frame">
+                <textarea id="txAreaStatus" class="txArea-log font-monospace" title="Log Display Area"></textarea>
             </div>
         </div>
     </div>
@@ -186,20 +290,142 @@
 
 @section scripts
     {
-    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css" />
-    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script type="text/javascript" src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script type="text/javascript" src="/js/site.js"></script>
+    <script type="text/javascript" src="/js/ConsoleAPI.js"></script>
+
 
     <script type="text/javascript">
 
+        let camera_1_canvas;
+        let canvasContextCamera1;
+        let resizeObserver;
+        let sliderThresholdCamera1 = document.getElementById("camera_1_confidence_slider");
+        let sliderThresholdCamera2 = document.getElementById("camera_2_confidence_slider");
+        let sliderThresholdCamera3 = document.getElementById("camera_3_confidence_slider");
+        let sliderThresholdValueCamera1 = document.getElementById("camera_1_confidence_sliderLabel");
+        let sliderThresholdValueCamera2 = document.getElementById("camera_2_confidence_sliderLabel");
+        let sliderThresholdValueCamera3 = document.getElementById("camera_3_confidence_sliderLabel");
+        let signalRHub;
+        let imageCountMap = new Map();
+        let pendingInferenceCount = new Map();
+        let camera_1_pending_inference_Count = 0;
+        let camera_2_pending_inference_Count = 0;
+        let aiButtonMap = new Map();
+        let modelListMap = new Map();
+
+        window.onload = function () {
+        };
+
         $(document).ready(function () {
-            document.getElementById('li_advanced').classList.remove('active');
-            document.getElementById('li_dashboard').classList.add('active');
+
+            const deviceIds = [];
+            let camera1_id = '@(ViewData["Camera_1_ID"])';
+            let camera2_id = '@(ViewData["Camera_2_ID"])';
+            let camera3_id = '@(ViewData["Camera_3_ID"])';
+            deviceIds.push(camera1_id);
+            deviceIds.push(camera2_id);
+            //            deviceIds.push('@(ViewData["Camera1_ID"])');
+
+            aiButtonMap.set(camera1_id, 'camera_1_ai_btn');
+            aiButtonMap.set(camera2_id, 'camera_2_ai_btn');
+            aiButtonMap.set(camera3_id, 'camera_3_ai_btn');
+
+            modelListMap.set(camera1_id, 'camera_1_model_list');
+            modelListMap.set(camera2_id, 'camera_2_model_list');
+            modelListMap.set(camera3_id, 'camera_3_model_list');
+
+            //
+            //
+            // Slider
+            //
+            //camera_3_confidence_sliderLabel.innerHTML = `${camera_1_confidence_slider.value}%`;
+            //camera_2_confidence_sliderLabel.innerHTML = `${camera_2_confidence_slider.value}%`;
+            //camera_3_confidence_sliderLabel.innerHTML = `${camera_3_confidence_slider.value}%`;
+
+            //sliderThresholdCamera1.addEventListener("input", processSliderInput, false);
+            //sliderThresholdCamera2.addEventListener("input", processSliderInput, false);
+            //sliderThresholdCamera3.addEventListener("input", processSliderInput, false);
+
+            $("input[data-bootstrap-switch]").each(function () {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
 
             $('.sidebar-mini').removeClass('sidebar-open');
             $('.sidebar-mini').addClass('sidebar-closed sidebar-collapse');
+
+            initCanvas('camera_1_canvas');
+            initCanvas('camera_2_canvas');
+            //disabled for EVS
+            //initCanvas('camera_3_canvas');
+
+            document.getElementById("txAreaStatus").value = '';
+
+            // SignalR
+            signalRHub = new signalR.HubConnectionBuilder()
+                .withUrl("/hub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            signalRHub.start()
+                .then(() => console.log('SignalR connected!'))
+                .catch(err => console.log(`Error while establishing a connection : ${err.toString()}`));
+
+            signalRHub.on('deviceTelemetry', function (payload) {
+
+                processTelemetry(payload);
+            });
+
+            // new ResizeObserver(canvasResize).observe(document.getElementById('camera_3_canvas_container'));
+
+            //const canvas = document.getElementsByTagName('camera_3_canvas_container')[0];
+            //const observer = new ResizeObserver(onResize);
+            //observer.observe(canvas);
+
+            UpdateAllCameraData('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
         });
 
+        function getDate(dateString) {
+            var date = new Date(Date.UTC(dateString.substr(0, 4), dateString.substr(4, 2), dateString.substr(6, 2), dateString.substr(8, 2), dateString.substr(10, 2), dateString.substr(12, 2), dateString.substr(14, 3)));
+            return date;
+        }
+
+        $('#btnClearLogs').click(function (evt) {
+            document.getElementById('txAreaStatus').value = null;
+            var message = '@ViewData["Camera_1_ID"]';
+            console.debug(message);
+        })
+
+        var resizeIt = function () {
+            console.log("Resize");
+            //var size = calculateAspectRatioFit($canvas.width(), $canvas.height(), $container.width(), $container.height());
+
+            //$canvas.css('height', size.height);
+            //$canvas.css('width', size.width);
+        };
+
+        function canvasResize(test) {
+            //let container = $('#camera_3_canvas_container');
+            //console.log(`${container.innerWidth()} x ${container.innerHeight()}`);
+            //var canvas = document.getElementById('camera_3_canvas');
+            //var ctx = canvas.getContext("2d");
+
+            //let data = ctx.getImageData();
+            //canvas.width = `${container.innerWidth()}px`;
+            //canvas.style.height = `${container.innerHeight()}px`;
+            //ctx.putImageData(data);
+        }
+
+        function StartInferences() {
+
+            StartAllInferences('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+        }
+
+        function StopInferences() {
+
+            StopAllInference('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+        }
     </script>
 }
