@@ -18,7 +18,7 @@
                     </div>
                     <div class="header-camera-name font-subhead" id="camera_1_name">Loading...</div>
                     <div class="header-right-icon-frame">
-                        <button type="button" class="btn btn-ai-inactive" id="btnAICamera1" onclick="btnAiClick(this)" data-streaming=false>
+                        <button type="button" class="btn btn-ai-inactive" id="camera_1_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
                             <div class="font-button-labels">AI</div>
                         </button>
                     </div>
@@ -32,14 +32,14 @@
                     </div>
                     <div class="body-frame-content font-labels">
                         AI Model
-                        <select name="modelListCamera1" id="modelListCamera1" class="custom-select my-select font-values" style="color:#000000 !important">
+                        <select name="camera_1_model_list" id="camera_1_model_list" class="custom-select my-select font-values" style="color:#000000 !important">
                         </select>
                     </div>
                     <div class="body-frame-content font-labels" style="display:none">
                         Current Threshold
                         <div class="slider-frame">
-                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera1">
-                            <div class="slider-label-frame font-values" id="SliderConfidenceLevelCamera1Label">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="camera_3_confidence_slider">
+                            <div class="slider-label-frame font-values" id="camera_1_confidence_sliderLabel">
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div class="body-frame-result">
                             <div class="font-labels">
                                 Inference Results
-                                <div class="result_label font-values" id="result_label_1" data-inferenceCount=0>0</div>
+                                <div class="result_label font-values" id="camera_1_result_label" data-inferenceCount=0>0</div>
                             </div>
                         </div>
                         <div class="body-frame-result">
@@ -69,15 +69,21 @@
                 <div class="body-frame-bottom">
                     <div class="body-frame-label font-subhead">
                         <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
-                        <span class="font-subhead">Image</span>
+                        <div class="header-camera-name font-subhead">Image</div>
+
+                        <div class="header-right-icon-frame">
+                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                                <div class="font-button-labels">Refresh</div>
+                            </button>
+                        </div>
                     </div>
                     <div class="body-frame-canvas font-labels">
-                        <div class="container loader-parent my-div-image" id="canvasCamera1Container">
+                        <div class="container loader-parent my-div-image" id="camera_1_canvas_container">
                             <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="canvasCamera1Overlay" style="z-index:300"></canvas>
-                                <canvas class="my-canvas" id="canvasCamera1" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
+                                <canvas class="my-canvas" id="camera_1_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_1_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
                             </div>
-                            <div id="canvasCamera1LoaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
+                            <div id="camera_1_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
                                 <div class="canvasLoader">
                                 </div>
                             </div>
@@ -100,7 +106,7 @@
                     </div>
                     <div class="header-camera-name font-subhead" id="camera_2_name">Loading...</div>
                     <div class="header-right-icon-frame">
-                        <button type="button" class="btn btn-ai-inactive" id="btnAICamera2" onclick="btnAiClick(this)" data-streaming=false>
+                        <button type="button" class="btn btn-ai-inactive" id="camera_2_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
                             <div class="font-button-labels">AI</div>
                         </button>
                     </div>
@@ -114,14 +120,14 @@
                     </div>
                     <div class="body-frame-content font-labels">
                         AI Model
-                        <select name="modelListCamera2" id="modelListCamera2" class="custom-select my-select font-values">
+                        <select name="camera_2_model_list" id="camera_2_model_list" class="custom-select my-select font-values">
                         </select>
                     </div>
                     <div class="body-frame-content font-labels" style="display:none">
                         Current Threshold
                         <div class="slider-frame">
-                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera2">
-                            <div class="slider-label-frame font-values" id="SliderConfidenceLevelCamera2Label">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="camera_2_confidence_slider">
+                            <div class="slider-label-frame font-values" id="camera_2_confidence_sliderLabel">
                             </div>
                         </div>
                     </div>
@@ -130,13 +136,13 @@
                 <div class="body-frame-middle">
                     <div class="body-frame-label font-subhead">
                         <img src="~/images/Bar.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;">
-                        <span class="font-subhead">Results</span>
+                        <span class="header-camera-name font-subhead">Results</span>
                     </div>
                     <div class="body-frame-content body-frame-results font-labels">
                         <div class="body-frame-result">
                             <div class="font-labels">
                                 Inference Results
-                                <div class="result_label font-values" id="result_label_2" data-inferenceCount=0>0</div>
+                                <div class="result_label font-values" id="camera_2_result_label" data-inferenceCount=0>0</div>
                             </div>
                         </div>
                         <div class="body-frame-result">
@@ -151,15 +157,20 @@
                 <div class="body-frame-bottom">
                     <div class="body-frame-label font-subhead">
                         <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
-                        <span class="font-subhead">Image</span>
+                        <div class="header-camera-name font-subhead">Image</div>
+                        <div class="header-right-icon-frame">
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                                <div class="font-button-labels">Refresh</div>
+                            </button>
+                        </div>
                     </div>
                     <div class="body-frame-canvas font-labels">
-                        <div class="container loader-parent my-div-image" id="canvasCamera2Container">
+                        <div class="container loader-parent my-div-image" id="camera_2_canvas_container">
                             <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="canvasCamera2Overlay" style="z-index:300"></canvas>
-                                <canvas class="my-canvas" id="canvasCamera2" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
+                                <canvas class="my-canvas" id="camera_2_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_2_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
                             </div>
-                            <div id="canvasCamera2LoaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
+                            <div id="camera_2_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
                                 <div class="canvasLoader">
                                 </div>
                             </div>
@@ -180,7 +191,7 @@
                     </div>
                     <div class="header-camera-name font-subhead" id="camera_3_name">Loading...</div>
                     <div class="header-right-icon-frame">
-                        <button type="button" class="btn btn-ai-inactive" id="btnAICamera3" onclick="btnAiClick(this)" data-streaming=false>
+                        <button type="button" class="btn btn-ai-inactive" id="camera_3_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
                             <div class="font-button-labels">AI</div>
                         </button>
                     </div>
@@ -194,14 +205,14 @@
                     </div>
                     <div class="body-frame-content font-labels">
                         AI Model
-                        <select name="modelListCamera3" id="modelListCamera3" class="custom-select my-select font-values" style="color:#000000 !important">
+                        <select name="camera_3_model_list" id="camera_3_model_list" class="custom-select my-select font-values" style="color:#000000 !important">
                         </select>
                     </div>
                     <div class="body-frame-content font-labels" style="display:none">
                         Current Threshold
                         <div class="slider-frame">
-                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="SliderConfidenceLevelCamera3">
-                            <div class="slider-label-frame font-values" id="SliderConfidenceLevelCamera3Label">
+                            <input type="range" class="slider my-slider" min="0" max="100" value="80" step="1" id="camera_3_confidence_slider">
+                            <div class="slider-label-frame font-values" id="camera_3_confidence_sliderLabel">
                                 12%
                             </div>
                         </div>
@@ -217,7 +228,7 @@
                         <div class="body-frame-result">
                             <div class="font-labels">
                                 Inference Results
-                                <div class="result_label font-values" id="result_label_3" data-inferenceCount=0>0</div>
+                                <div class="result_label font-values" id="camera_3_result_label" data-inferenceCount=0>0</div>
                             </div>
                         </div>
                         <div class="body-frame-result">
@@ -232,15 +243,20 @@
                 <div class="body-frame-bottom">
                     <div class="body-frame-label font-subhead">
                         <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
-                        <span class="font-subhead">Image</span>
+                        <div class="header-image-label font-subhead">Image</div>
+                        <div class="header-right-icon-frame">
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                                <div class="font-button-labels">Refresh</div>
+                            </button>
+                        </div>
                     </div>
                     <div class="body-frame-canvas font-labels">
-                        <div class="container loader-parent my-div-image" id="canvasCamera3Container">
+                        <div class="container loader-parent my-div-image" id="camera_3_canvas_container">
                             <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="canvasCamera3Overlay" style="z-index:300"></canvas>
-                                <canvas class="my-canvas" id="canvasCamera3" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
+                                <canvas class="my-canvas" id="camera_3_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_3_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
                             </div>
-                            <div id="canvasCamera3LoaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
+                            <div id="camera_3_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
                                 <div class="canvasLoader">
                                 </div>
                             </div>
@@ -278,23 +294,27 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <script type="text/javascript" src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script type="text/javascript" src="/js/site.js"></script>
+    <script type="text/javascript" src="/js/ConsoleAPI.js"></script>
 
 
     <script type="text/javascript">
 
-        let canvasCamera1;
+        let camera_1_canvas;
         let canvasContextCamera1;
         let resizeObserver;
-        let sliderThresholdCamera1 = document.getElementById("SliderConfidenceLevelCamera1");
-        let sliderThresholdCamera2 = document.getElementById("SliderConfidenceLevelCamera2");
-        let sliderThresholdCamera3 = document.getElementById("SliderConfidenceLevelCamera3");
-        let sliderThresholdValueCamera1 = document.getElementById("SliderConfidenceLevelCamera1Label");
-        let sliderThresholdValueCamera2 = document.getElementById("SliderConfidenceLevelCamera2Label");
-        let sliderThresholdValueCamera3 = document.getElementById("SliderConfidenceLevelCamera3Label");
+        let sliderThresholdCamera1 = document.getElementById("camera_1_confidence_slider");
+        let sliderThresholdCamera2 = document.getElementById("camera_2_confidence_slider");
+        let sliderThresholdCamera3 = document.getElementById("camera_3_confidence_slider");
+        let sliderThresholdValueCamera1 = document.getElementById("camera_1_confidence_sliderLabel");
+        let sliderThresholdValueCamera2 = document.getElementById("camera_2_confidence_sliderLabel");
+        let sliderThresholdValueCamera3 = document.getElementById("camera_3_confidence_sliderLabel");
         let signalRHub;
         let imageCountMap = new Map();
+        let pendingInferenceCount = new Map();
         let camera_1_pending_inference_Count = 0;
         let camera_2_pending_inference_Count = 0;
+        let aiButtonMap = new Map();
+        let modelListMap = new Map();
 
         window.onload = function () {
         };
@@ -309,13 +329,21 @@
             deviceIds.push(camera2_id);
             //            deviceIds.push('@(ViewData["Camera1_ID"])');
 
+            aiButtonMap.set(camera1_id, 'camera_1_ai_btn');
+            aiButtonMap.set(camera2_id, 'camera_2_ai_btn');
+            aiButtonMap.set(camera3_id, 'camera_3_ai_btn');
+
+            modelListMap.set(camera1_id, 'camera_1_model_list');
+            modelListMap.set(camera2_id, 'camera_2_model_list');
+            modelListMap.set(camera3_id, 'camera_3_model_list');
+
             //
             //
             // Slider
             //
-            //SliderConfidenceLevelCamera1Label.innerHTML = `${SliderConfidenceLevelCamera1.value}%`;
-            //SliderConfidenceLevelCamera2Label.innerHTML = `${SliderConfidenceLevelCamera2.value}%`;
-            //SliderConfidenceLevelCamera3Label.innerHTML = `${SliderConfidenceLevelCamera3.value}%`;
+            //camera_3_confidence_sliderLabel.innerHTML = `${camera_1_confidence_slider.value}%`;
+            //camera_2_confidence_sliderLabel.innerHTML = `${camera_2_confidence_slider.value}%`;
+            //camera_3_confidence_sliderLabel.innerHTML = `${camera_3_confidence_slider.value}%`;
 
             //sliderThresholdCamera1.addEventListener("input", processSliderInput, false);
             //sliderThresholdCamera2.addEventListener("input", processSliderInput, false);
@@ -328,10 +356,10 @@
             $('.sidebar-mini').removeClass('sidebar-open');
             $('.sidebar-mini').addClass('sidebar-closed sidebar-collapse');
 
-            initCanvas('canvasCamera1');
-            initCanvas('canvasCamera2');
+            initCanvas('camera_1_canvas');
+            initCanvas('camera_2_canvas');
             //disabled for EVS
-            //initCanvas('canvasCamera3');
+            //initCanvas('camera_3_canvas');
 
             document.getElementById("txAreaStatus").value = '';
 
@@ -350,21 +378,13 @@
                 processTelemetry(payload);
             });
 
-            // new ResizeObserver(canvasResize).observe(document.getElementById('canvasCamera3Container'));
+            // new ResizeObserver(canvasResize).observe(document.getElementById('camera_3_canvas_container'));
 
-            //const canvas = document.getElementsByTagName('canvasCamera3Container')[0];
+            //const canvas = document.getElementsByTagName('camera_3_canvas_container')[0];
             //const observer = new ResizeObserver(onResize);
             //observer.observe(canvas);
 
             UpdateAllCameraData('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
-
-            GetNumImages(deviceIds)
-
-            camera_1_pending_inference_Count = imageCountMap.get(camera1_id);
-            camera_2_pending_inference_Count = imageCountMap.get(camera2_id);
-            //camera_3_pending_inference_Count = imageCountMap.get(camera3_id);
-
-
         });
 
         function getDate(dateString) {
@@ -387,9 +407,9 @@
         };
 
         function canvasResize(test) {
-            //let container = $('#canvasCamera3Container');
+            //let container = $('#camera_3_canvas_container');
             //console.log(`${container.innerWidth()} x ${container.innerHeight()}`);
-            //var canvas = document.getElementById('canvasCamera3');
+            //var canvas = document.getElementById('camera_3_canvas');
             //var ctx = canvas.getContext("2d");
 
             //let data = ctx.getImageData();

@@ -13,8 +13,8 @@
 //
 function GetDevices(deviceId) {
 
-    var funcName = `${arguments.callee.name}()`;
-    console.debug("=>", funcName)
+    var funcName = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${funcName}`);
     const start = Date.now();
 
     try {
@@ -45,8 +45,8 @@ function GetDevices(deviceId) {
 //
 function GetDirectImage(deviceId) {
 
-    var funcName = `${arguments.callee.name}()`;
-    console.debug("=>", funcName)
+    var funcName = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${funcName}`);
     const start = Date.now();
 
     try {
@@ -79,11 +79,14 @@ function GetDirectImage(deviceId) {
 // Calls StartUploadInferenceResult() API through AITRIOSConsole Controller
 //
 function StartUploadInferenceResult(deviceId) {
-    var funcName = `${arguments.callee.name}()`;
-    console.debug("=>", funcName)
+    var funcName = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${funcName}`);
     const start = Date.now();
 
     try {
+
+        pendingInferenceCount.set(deviceId, imageCountMap.get(deviceId));
+
         return $.ajax({
             async: true,
             type: "POST",
@@ -111,11 +114,14 @@ function StartUploadInferenceResult(deviceId) {
 //
 function StopUploadInferenceResult(deviceId) {
 
-    var funcName = `${arguments.callee.name}()`;
-    console.debug("=>", funcName)
+    var funcName = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${funcName} `);
     const start = Date.now();
 
     try {
+        pendingInferenceCount.set(deviceId, 0);
+        toggleAiButton(aiButtonMap.get(deviceId), false);
+
         return $.ajax({
             async: true,
             type: "POST",
@@ -146,7 +152,7 @@ function StopUploadInferenceResult(deviceId) {
 function GetCommandParameterFile() {
 
     var funcName = `${arguments.callee.name}()`;
-    console.debug("=>", funcName)
+    console.debug(`==> ${funcName}`);
     const start = Date.now();
 
     try {
