@@ -562,7 +562,7 @@ li.my-nav-header, .my-nav-header, li.nav-item, .nav-item {
 
     .canvasLoader:not(:required) {
         hide "loading..." text font: 0/0 a;
-        color: transparent;
+        color: #ffffff;
         text-shadow: none;
         background-color: transparent;
         border: 0;
@@ -583,8 +583,8 @@ li.my-nav-header, .my-nav-header, li.nav-item, .nav-item {
             -o-animation: spinner 1500ms infinite linear;
             animation: spinner 1500ms infinite linear;
             border-radius: 0.5em;
-            -webkit-box-shadow: rgba(209, 209, 209, 0.75) 1.5em 0 0 0, rgba(209, 209, 209, 0.75) 1.1em 1.1em 0 0, rgba(209, 209, 209, 0.75) 0 1.5em 0 0, rgba(209, 209, 209, 0.75) -1.1em 1.1em 0 0, rgba(209, 209, 209, 0.5) -1.5em 0 0 0, rgba(209, 209, 209, 0.5) -1.1em -1.1em 0 0, rgba(209, 209, 209, 0.75) 0 -1.5em 0 0, rgba(209, 209, 209, 0.75) 1.1em -1.1em 0 0;
-            box-shadow: rgba(209, 209, 209, 0.75) 1.5em 0 0 0, rgba(209, 209, 209, 0.75) 1.1em 1.1em 0 0, rgba(209, 209, 209, 0.75) 0 1.5em 0 0, rgba(209, 209, 209, 0.75) -1.1em 1.1em 0 0, rgba(209, 209, 209, 0.75) -1.5em 0 0 0, rgba(209, 209, 209, 0.75) -1.1em -1.1em 0 0, rgba(209, 209, 209, 0.75) 0 -1.5em 0 0, rgba(209, 209, 209, 0.75) 1.1em -1.1em 0 0;
+            -webkit-box-shadow: rgba(255, 255, 255, 1.0) 1.5em 0 0 0, rgba(255, 255, 255, 1.0) 1.1em 1.1em 0 0, rgba(255, 255, 255, 1.0) 0 1.5em 0 0, rgba(255, 255, 255, 1.0) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.5) -1.5em 0 0 0, rgba(255, 255, 255, 0.5) -1.1em -1.1em 0 0, rgba(255, 255, 255, 1.0) 0 -1.5em 0 0, rgba(255, 255, 255, 1.0) 1.1em -1.1em 0 0;
+            box-shadow: rgba(255, 255, 255, 1.0) 1.5em 0 0 0, rgba(255, 255, 255, 1.0) 1.1em 1.1em 0 0, rgba(255, 255, 255, 1.0) 0 1.5em 0 0, rgba(255, 255, 255, 1.0) -1.1em 1.1em 0 0, rgba(255, 255, 255, 1.0) -1.5em 0 0 0, rgba(255, 255, 255, 1.0) -1.1em -1.1em 0 0, rgba(255, 255, 255, 1.0) 0 -1.5em 0 0, rgba(255, 255, 255, 1.0) 1.1em -1.1em 0 0;
         }
 
 

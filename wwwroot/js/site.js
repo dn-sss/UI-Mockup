@@ -18,25 +18,31 @@ function initCanvas(canvasId) {
     ctx.canvas.width = ContainerHeight
     ctx.canvas.height = ContainerWidth;
 
+    showSpinnerAndDisplayMessage(canvasId);
+}
+
+//
+// Function to display spinner and message
+//
+
+function showSpinnerAndDisplayMessage(canvasId) {
+
     // Initialize overlay canvas 
     let overlayCanvas = document.getElementById(`${canvasId}_overlay`);
     let overlayCtx = overlayCanvas.getContext('2d');
 
-    // set canvas size to fit Container DIV
-    overlayCtx.canvas.width = ContainerWidth;
-    overlayCtx.canvas.height = ContainerHeight;
+    document.getElementById(`${canvasId}_loaderWrapper`).style.display = "block";
 
     // set font in case we want to draw text on the overlay canvas.
     overlayCtx.font = '24px Inter';
-    overlayCtx.lineWidth = 1;
     overlayCtx.textBaseline = "top";
-    overlayCtx.fillStyle = "#11283E";
+    overlayCtx.fillStyle = "#ffffff";
     overlayCtx.textAlign = "center";
 
     // Display a message
-    overlayCtx.fillText("Loading Image", parseInt(overlayCanvas.width / 2), parseInt((overlayCanvas.height / 3) * 2));
-}
+    overlayCtx.fillText("Loading Image", parseInt(overlayCanvas.width / 2), parseInt((overlayCanvas.height / 5) * 4));
 
+}
 //
 // Called from input change event listner for sliders
 // 
@@ -74,8 +80,6 @@ function UpdateAllCameraData(device_1_id, device_2_id, device_3_id) {
     //Disabled for EVS
     //UpdateCameraInfo(device_3_id, 'camera_3_name', 'camera_3_wifi_icon', 'camera_3_model_list', 'camera_3_canvas', 'camera_3_ai_btn', 'camera_3_image_refresh');
 
-    GetModelInfo(device_1_id);
-    GetModelInfo(device_2_id);
 }
 
 //
@@ -83,8 +87,14 @@ function UpdateAllCameraData(device_1_id, device_2_id, device_3_id) {
 //
 async function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId, canvasId, btnAiCameraId, btnRefreshImageId) {
 
+
     // Get device information
     console.log("==> GetDevices");
+
+    if (deviceId.length == 0) {
+        return false;
+    }
+
     GetDevices(deviceId)
         .done(async function (response) {
             let jsonData = JSON.parse(response.value);
@@ -95,13 +105,25 @@ async function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId,
 
             // make sure we are looking at the right device.
             if (jsonData.device_id == deviceId) {
-
                 // Update UI with Camera's display name (vs. Device ID)
                 $(`#${cameraNameId}`).html(jsonData['property'].device_name);
                 // Remember Device ID as an attribute
                 $(`#${cameraNameId}`).attr('data-deviceId', deviceId);
                 $(`#${btnAiCameraId}`).attr('data-deviceId', deviceId);
                 $(`#${btnRefreshImageId}`).attr('data-deviceId', deviceId);
+
+                // Update Model drop down list
+                var list = $(`#${modelListId}`);
+
+                list.empty();
+                for (var model in jsonData.models) {
+                    var option = $('<option>').val(jsonData.models[model].model_version_id.split(":")[0]);
+                    option.text(jsonData.models[model].model_version_id);
+                    list.append(option);
+                }
+
+                list.val(modelInfoMap.get(deviceId));
+               
 
                 // Check connection status
                 // Update WiFi icon color through CSS Class based on connection status
@@ -123,32 +145,26 @@ async function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId,
                     // Get a snapshot through GetDirectImage() console API.
                     // work in progress
                     // Should call this onlyl when the device is connected.
+                    showSpinnerAndDisplayMessage(canvasId);
                     GetDirectImage(deviceId)
                         .done(function (response) {
                             let jsonData = JSON.parse(response.value);
-                            ProcessGetDirectImageResponse(canvasId, jsonData);
+                            ProcessGetDirectImageResponse(canvasId, jsonData, true);
                         });
+
+                    return true;
 
                 } else {
                     $(`#${wifiIconId}`).addClass('WiFi-Svg-DisConnect');
                     $(`#${wifiIconId}`).removeClass('WiFi-Svg-Connect');
+
+                    // to do
+                    // should draw a message on overlay canvas
+
+                    return false;
                 }
-
-
-            }
-
-            // Update Mode drop down list
-            var list = $(`#${modelListId}`);
-
-            list.empty();
-            for (var model in jsonData.models) {
-                var option = $('<option>').val(jsonData.models[model].model_version_id.split(":")[0]);
-                option.text(jsonData.models[model].model_version_id);
-                list.append(option);
             }
         });
-
-
 }
 
 //
@@ -189,12 +205,13 @@ function processTelemetry(payload) {
                 overlayCtx.strokeStyle = 'red';
                 overlayCtx.lineWidth = 2
                 overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+                let classId = $(`#camera_${index}_canvas_overlay`).attr('data-obclass');
 
                 // Loop through inference results
                 for (const key in jsonData["inferenceResults"]) {
                     // work in progress
                     // Need a way to configure confidence level threshold (Global)
-                    if (jsonData["inferenceResults"][key].Class == 0 && jsonData["inferenceResults"][key].Confidence > 0.1) {
+                    if (jsonData["inferenceResults"][key].Class == classId && jsonData["inferenceResults"][key].Confidence > 0.1) {
 
                         // draw a bounding box
                         let x = parseInt(canvas.width * jsonData["inferenceResults"][key].x);
@@ -204,6 +221,8 @@ function processTelemetry(payload) {
 
                         overlayCtx.strokeRect(x, y, X - x, Y - y);
                     }
+                    else {
+                    }
                 }
             }
             let canvasId = `camera_${index}_canvas`;
@@ -212,11 +231,13 @@ function processTelemetry(payload) {
 
                 toggleAiButton(aiButtonMap.get(deviceId), false);
 
-                GetDirectImage(deviceId)
-                    .done(function (response) {
-                        let jsonData = JSON.parse(response.value);
-                        ProcessGetDirectImageResponse(canvasId, jsonData);
-                    });
+                if (bAutoPilot == true) {
+                    GetDirectImage(deviceId)
+                        .done(function (response) {
+                            let jsonData = JSON.parse(response.value);
+                            ProcessGetDirectImageResponse(canvasId, jsonData, false);
+                        });
+                }
             }
         }
     }
@@ -266,6 +287,9 @@ function btnImageRefreshClick(item) {
 
     let bStreaming = ($(item).attr('data-streaming') == 'true');
     let deviceId = $(item).attr('data-deviceId');
+    let canvasId = $(item).attr('data-canvasid');
+
+    showSpinnerAndDisplayMessage(canvasId);
 
     if (bStreaming == 'true') {
         StopUploadInferenceResult(deviceId);
@@ -274,7 +298,7 @@ function btnImageRefreshClick(item) {
     GetDirectImage(deviceId)
         .done(function (response) {
             let jsonData = JSON.parse(response.value);
-            ProcessGetDirectImageResponse(canvasId, jsonData);
+            ProcessGetDirectImageResponse(canvasId, jsonData, true);
         });
 }
 //
@@ -301,7 +325,7 @@ function StopAllInference(device_1_id, device_2_id, device_3_id) {
 // Get info on models
 // 1. Set imageCountMap for # of inferences expected
 // 2. Set Model in the Drop Down list.
-function GetModelInfo(deviceIds) {
+function GetModelInfo() {
 
     GetCommandParameterFile()
         .done(async function (response) {
@@ -320,9 +344,7 @@ function GetModelInfo(deviceIds) {
                             let numImages = jsonData.parameter_list[index].parameter.commands[command].parameters.NumberOfImages;
                             let modelId = jsonData.parameter_list[index].parameter.commands[command].parameters.ModelId;
                             imageCountMap.set(deviceId, numImages);
-                            console.debug(`${deviceId} : Model ${modelId}`)
-                            $(`#${modelListId}`).val(modelId);
-
+                            modelInfoMap.set(deviceId, modelId);
                         }
                     }
                 }
@@ -330,7 +352,7 @@ function GetModelInfo(deviceIds) {
         });
 }
 
-function ProcessGetDirectImageResponse(canvasId, jsonData) {
+function ProcessGetDirectImageResponse(canvasId, jsonData, bClearOverlay) {
 
     if (jsonData.result == "SUCCESS") {
 
@@ -365,6 +387,7 @@ function ProcessGetDirectImageResponse(canvasId, jsonData) {
             container.height = newHeight;
             ctx.canvas.height = newHeight;
             ctx.canvas.width = newWidth;
+
             ctxCanvasOverlay.canvas.height = newHeight;
             ctxCanvasOverlay.canvas.width = newWidth;
 
@@ -387,10 +410,9 @@ function ProcessGetDirectImageResponse(canvasId, jsonData) {
         let overlayCanvas = document.getElementById(`${canvasId}_overlay`);
         let overlayCtx = overlayCanvas.getContext('2d');
 
-        overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-        overlayCtx.strokeStyle = 'red';
-        overlayCtx.lineWidth = 1;
-        overlayCtx.strokeRect(0, 0, 100, 100);
+        if (bClearOverlay) {
+            overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        }
     }
 
     let loader = document.getElementById(`${canvasId}_loaderWrapper`);

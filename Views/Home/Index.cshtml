@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "AITRIOS Console Mockup Demo";
+    ViewData["Title"] = "AITRIOS Object Detection Demo";
 }
 
 <div class="container-fluid">
@@ -72,7 +72,7 @@
                         <div class="header-camera-name font-subhead">Image</div>
 
                         <div class="header-right-icon-frame">
-                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false data-canvasid ='camera_1_canvas'>
                                 <div class="font-button-labels">Refresh</div>
                             </button>
                         </div>
@@ -80,7 +80,7 @@
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="camera_1_canvas_container">
                             <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="camera_1_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_1_canvas_overlay" style="z-index:300" data-obclass=1></canvas>
                                 <canvas class="my-canvas" id="camera_1_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
                             </div>
                             <div id="camera_1_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
@@ -159,7 +159,7 @@
                         <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
                         <div class="header-camera-name font-subhead">Image</div>
                         <div class="header-right-icon-frame">
-                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false data-canvasid='camera_2_canvas'>
                                 <div class="font-button-labels">Refresh</div>
                             </button>
                         </div>
@@ -167,7 +167,7 @@
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="camera_2_canvas_container">
                             <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="camera_2_canvas_overlay" style="z-index:300"></canvas>
+                                <canvas class="my-canvas" id="camera_2_canvas_overlay" style="z-index:300" data-obclass=0></canvas>
                                 <canvas class="my-canvas" id="camera_2_canvas" style="z-index:100;border-color:red !important;border: thin double !important;"></canvas>
                             </div>
                             <div id="camera_2_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
@@ -282,7 +282,7 @@
                 </div>
             </div>
             <div class="body-frame">
-                <textarea id="txAreaStatus" class="txArea-log font-monospace" title="Log Display Area"></textarea>
+                <textarea readonly id="txAreaStatus" class="txArea-log font-monospace" title="Log Display Area"></textarea>
             </div>
         </div>
     </div>
@@ -311,17 +311,19 @@
         let signalRHub;
         let imageCountMap = new Map();
         let pendingInferenceCount = new Map();
+        let modelInfoMap = new Map();
         let camera_1_pending_inference_Count = 0;
         let camera_2_pending_inference_Count = 0;
         let aiButtonMap = new Map();
         let modelListMap = new Map();
+        const deviceIds = [];
+        let bAutoPilot = false;
 
         window.onload = function () {
         };
 
         $(document).ready(function () {
 
-            const deviceIds = [];
             let camera1_id = '@(ViewData["Camera_1_ID"])';
             let camera2_id = '@(ViewData["Camera_2_ID"])';
             let camera3_id = '@(ViewData["Camera_3_ID"])';
@@ -384,6 +386,8 @@
             //const observer = new ResizeObserver(onResize);
             //observer.observe(canvas);
 
+            GetModelInfo();
+
             UpdateAllCameraData('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
         });
 
@@ -394,8 +398,6 @@
 
         $('#btnClearLogs').click(function (evt) {
             document.getElementById('txAreaStatus').value = null;
-            var message = '@ViewData["Camera_1_ID"]';
-            console.debug(message);
         })
 
         var resizeIt = function () {
@@ -426,6 +428,27 @@
         function StopInferences() {
 
             StopAllInference('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
+        }
+
+        function HideOverlay()
+        {
+            if (document.getElementById(`camera_1_canvas_overlay`).style.display == "none")
+            {
+                document.getElementById(`camera_1_canvas_overlay`).style.display = "block";
+            }
+            else
+            {
+                document.getElementById(`camera_1_canvas_overlay`).style.display = "none";
+
+            }
+
+            if (document.getElementById(`camera_2_canvas_overlay`).style.display == "none") {
+                document.getElementById(`camera_2_canvas_overlay`).style.display = "block";
+            }
+            else {
+                document.getElementById(`camera_2_canvas_overlay`).style.display = "none";
+
+            }
         }
     </script>
 }
