@@ -178,7 +178,8 @@ async function UpdateCameraInfo(deviceId, cameraNameId, wifiIconId, modelListId,
 
                     // to do
                     // should draw a message on overlay canvas
-
+                    showSpinnerAndDisplayMessage(canvasId, "Device Offline");
+                    document.getElementById(`${canvasId}_loaderWrapper`).style.display = "none";
                     return false;
                 }
             }
