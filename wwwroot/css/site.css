@@ -6,6 +6,7 @@
     --black: #000000;
     --status-green: #55BE47;
     --status-grey:#95B5D4;
+    --gap-size : 8px;
     /* Toggle variables */
     --toggle-size: 24px;
     --toggle-border-thickness: 1px;
@@ -141,7 +142,7 @@ body {
     flex-direction: row;
     align-items: center;
     padding: 16px;
-    gap: 8px;
+    gap: var(--gap-size);
     background-color: #11283e;
     border-radius: 8px 8px 0px 0px;
 }
@@ -167,7 +168,7 @@ body {
     flex-direction: row;
     align-items: center;
     padding: 0px;
-    gap: 8px;
+    gap: var(--gap-size);
     float: right;
     position: relative
 }
@@ -200,15 +201,8 @@ body {
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
+    gap: var(--gap-size);
     width: 100%;
-}
-
-.body-frame-top, .body-frame-middle {
-    gap: 16px;
-}
-
-.body-frame-bottom {
-    gap: 4px;
 }
 
 .body-frame-label {
@@ -216,8 +210,8 @@ body {
     flex-direction: row;
     align-items: center;
     padding: 0px;
-    gap: 8px;
-    width:100%;
+    gap: var(--gap-size);
+    width: 100%;
 }
 
 .body-frame-content {
@@ -256,7 +250,7 @@ body {
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
-    gap: 8px;
+    gap: var(--gap-size);
     width: 100%;
 }
 
@@ -270,6 +264,7 @@ body {
     color: #000000;
     width: 100%;
     margin-top:4px;
+    gap: var(--gap-size);
 }
 
 .body-frame-result {
@@ -287,7 +282,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 10px;
-    gap: 10px;
+    gap: var(--gap-size);
     background: linear-gradient(180deg, #DADADA 0%, #9F9D9D 100%);
     width: 100%;
 }
@@ -310,12 +305,16 @@ body {
     vertical-align: baseline !important;
 }
 
-.WiFi-Svg-Connect {
+.Svg-Active {
     color: var(--status-green);
 }
 
-.WiFi-Svg-DisConnect {
+.Svg-Inactive {
     color: var(--status-grey);
+}
+
+.Svg-White {
+    color: var(--white)
 }
 
 .AI-Div-Running {
@@ -324,7 +323,7 @@ body {
 
 .form-field {
     display: flex;
-    gap: 0.5em;
+    gap: var(--gap-size);
     align-items: center;
 }
 
@@ -367,7 +366,7 @@ body {
     padding: 0 !important;
     /*width:100%;*/
     width:566px;
-    height:433px;
+    height:400px;
 }
 
 .canvasOverlay {
@@ -378,9 +377,6 @@ body {
 .my-canvas {
     position:absolute;
     /*min-width:320px;*/
-    border: thin solid !important;
-    border-width: 0.1px !important;
-    border-color: yellow !important;
     padding:0;
     aspect-ratio: 4/3;
     object-fit:scale-down;
@@ -440,7 +436,6 @@ body {
 
 .my-brand-text {
     max-height: 38px !important;
-    padding-top: 23px !important;
     padding-bottom: 23px !important;
 }
 
@@ -486,10 +481,6 @@ body {
 
 .my-brand-link {
     background-color: #11283E !important;
-}
-
-.navbar-fa {
-    color: #3e445b !important;
 }
 
 .my-brand-text {

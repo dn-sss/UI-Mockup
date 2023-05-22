@@ -63,25 +63,29 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column my-nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="StartInferences();return false;">
-                                <img src="~/images/Play.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
-                                <p class="font-menu-item">Start Demo</p>
+                            <a href="#" class="nav-link" onclick="StartAutoPilotClick();return false;">
+                                <div id="autopilot-start" class="Svg-White" width="24" height="24">
+                                    <svg width="24" height="24" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px">
+                                        <path d="M0 0V14L11 7L0 0Z" fill="currentColor" />
+                                    </svg>
+                                    <p class="font-menu-item">Start Demo</p>
+                                </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="StopInferences();return false;">
+                            <a href="#" class="nav-link" onclick="StopAutoPilotClick();return false;">
                                 <img src="~/images/Stop.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
                                 <p class="font-menu-item">Stop Demo</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+@*                        <li class="nav-item">
                             <a href="#" class="nav-link" onclick="HideOverlay();return false;">
                                 <img src="~/images/Cloud.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
                                 <p class="font-menu-item">Check Connectivity</p>
                             </a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="EnableDisableLogCard();return false;">
+                            <a href="#" class="nav-link" onclick="ToggleDisplayLogTile();return false;">
                                 <img src="~/images/Settings.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
                                 <p id="labeltxAreaStatus" class="font-menu-item">Display Logs</p>
                             </a>
