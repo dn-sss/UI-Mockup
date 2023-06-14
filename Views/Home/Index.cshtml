@@ -8,6 +8,7 @@
         <!-- For EVS only 2 columns
         <div class="col-12 col-sm-4 col-md-4 my-col">
         -->
+        <image id="aitrios-logo" src="/images/AITRIOS-Logo-Canvas-BG.png" style="display:none"></image>
         <div class="col-12 col-sm-6 col-md-6 my-col">
             <div class="header-frame">
                 <div class="header-frame-inside">
@@ -16,9 +17,9 @@
                             <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
                         </svg>
                     </div>
-                    <div class="header-camera-name font-subhead" id="camera_1_name">Loading...</div>
+                    <div class="header-camera-name font-subhead" id="camera_1_name">Checking Camera Status...</div>
                     <div class="header-right-icon-frame">
-                        <button type="button" class="btn btn-ai-inactive" id="camera_1_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
+                        <button type="button" class="btn btn-ai-inactive" id="camera_1_ai_btn" onclick="btnAiClick(this)" data-streaming=false disabled>
                             <div class="font-button-labels">AI</div>
                         </button>
                     </div>
@@ -52,15 +53,15 @@
                     </div>
                     <div class="body-frame-content body-frame-results font-labels">
                         <div class="body-frame-result">
-                            <div class="font-labels">
+                            <div class="font-labels" data-toggle="tooltip" title="Number of AI Inference Results executed and sent to Cloud.  Accumulated for this session.">
                                 Inference Results
-                                <div class="result_label font-values" id="camera_1_inf_count_label" data-inferenceCount=0>&nbsp;</div>
+                                <div class="result_label font-values" id="camera_1_inf_count_label" data-inferenceCount=0>0</div>
                             </div>
                         </div>
                         <div class="body-frame-result">
                             <div class="font-labels">
-                                People Detected
-                                <div class="result_label font-values" id="camera_1_detect_count_label">&nbsp;</div>
+                                Object Detected
+                                <div class="result_label font-values" id="camera_1_detect_count_label">0</div>
                             </div>
                         </div>
                     </div>
@@ -72,17 +73,20 @@
                         <div class="header-camera-name font-subhead">Image</div>
 
                         <div class="header-right-icon-frame">
-                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
-                                <div class="font-button-labels">Refresh</div>
+                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_refresh" onclick="btnGetDirectImageClick(this)" data-streaming=false disabled>
+                                <div class="font-button-labels">Get Image</div>
+                            </button>
+                            <button type="button" class="btn btn-image-refresh" id="camera_1_image_clear" onclick="btnImageClearClick(this)" data-streaming=false disabled>
+                                <div class="font-button-labels">Clear</div>
                             </button>
                         </div>
                     </div>
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="camera_1_canvas_container">
-                            <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="camera_1_canvas_overlay_message" width="566" height="434" style="z-index:300"></canvas>
-                                <canvas class="my-canvas" id="camera_1_canvas_overlay" style="z-index:200" data-obclass=1></canvas>
-                                <canvas class="my-canvas" id="camera_1_canvas" style="z-index:100"></canvas>
+                            <div class="row justify-content-center align-items-center canvas-container" style="margin:0;height:100%;width:100%">
+                                <canvas class="my-canvas" id="camera_1_canvas_overlay_message" style="z-index:300;"></canvas>
+                                <canvas class="my-canvas" id="camera_1_canvas_overlay_annotation" style="z-index:200;" data-obclass=1></canvas>
+                                <canvas class="my-canvas" id="camera_1_canvas" style="z-index:100;"></canvas>
                             </div>
                             <div id="camera_1_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
                                 <div class="canvasLoader">
@@ -105,9 +109,9 @@
                             <path d="M0 5.00001L2 7.00001C6.97 2.03001 15.03 2.03001 20 7.00001L22 5.00001C15.93 -1.06999 6.08 -1.06999 0 5.00001ZM8 13L11 16L14 13C12.35 11.34 9.66 11.34 8 13ZM4 9.00001L6 11C8.76 8.24001 13.24 8.24001 16 11L18 9.00001C14.14 5.14001 7.87 5.14001 4 9.00001Z" fill="currentColor" />
                         </svg>
                     </div>
-                    <div class="header-camera-name font-subhead" id="camera_2_name">Loading...</div>
+                    <div class="header-camera-name font-subhead" id="camera_2_name">Checking Camera Status...</div>
                     <div class="header-right-icon-frame">
-                        <button type="button" class="btn btn-ai-inactive" id="camera_2_ai_btn" onclick="btnAiClick(this)" data-streaming=false>
+                        <button type="button" class="btn btn-ai-inactive" id="camera_2_ai_btn" onclick="btnAiClick(this)" data-streaming=false disabled>
                             <div class="font-button-labels">AI</div>
                         </button>
                     </div>
@@ -141,15 +145,15 @@
                     </div>
                     <div class="body-frame-content body-frame-results font-labels">
                         <div class="body-frame-result">
-                            <div class="font-labels">
+                            <div class="font-labels" data-toggle="tooltip" title="Number of AI Inference Results executed and sent to Cloud.  Accumulated for this session.">
                                 Inference Results
-                                <div class="result_label font-values" id="camera_2_inf_count_label" data-inferenceCount=0>&nbsp;</div>
+                                <div class="result_label font-values" id="camera_2_inf_count_label" data-inferenceCount=0>0</div>
                             </div>
                         </div>
                         <div class="body-frame-result">
                             <div class="font-labels">
-                                Cars Detected
-                                <div class="result_label font-values" id="camera_2_detect_count_label">&nbsp;</div>
+                                Object Detected                                
+                                <div class="result_label font-values" id="camera_2_detect_count_label">0</div>
                             </div>
                         </div>
                     </div>
@@ -160,16 +164,19 @@
                         <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
                         <div class="header-camera-name font-subhead">Image</div>
                         <div class="header-right-icon-frame">
-                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
-                                <div class="font-button-labels">Refresh</div>
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnGetDirectImageClick(this)" data-streaming=false disabled>
+                                <div class="font-button-labels">Get Image</div>
+                            </button>
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_clear" onclick="btnImageClearClick(this)" data-streaming=false disabled>
+                                <div class="font-button-labels">Clear</div>
                             </button>
                         </div>
                     </div>
                     <div class="body-frame-canvas font-labels">
                         <div class="container loader-parent my-div-image" id="camera_2_canvas_container">
                             <div class="row justify-content-center align-items-center" style="margin:0;height:100%;width:100%">
-                                <canvas class="my-canvas" id="camera_2_canvas_overlay_message" width="566" height="434" style="z-index:300;"></canvas>
-                                <canvas class="my-canvas" id="camera_2_canvas_overlay" style="z-index:200" data-obclass=0></canvas>
+                                <canvas class="my-canvas" id="camera_2_canvas_overlay_message" style="z-index:300;"></canvas>
+                                <canvas class="my-canvas" id="camera_2_canvas_overlay_annotation" style="z-index:200" data-obclass=0></canvas>
                                 <canvas class="my-canvas" id="camera_2_canvas" style="z-index:100"></canvas>
                             </div>
                             <div id="camera_2_canvas_loaderWrapper" class="canvasLoaderWrapper" style="height:100%;width:100%;display:block">
@@ -247,7 +254,7 @@
                         <img src="~/images/Camera.svg" alt="Image" width="24" height="24" style="vertical-align: text-top;">
                         <div class="header-image-label font-subhead">Image</div>
                         <div class="header-right-icon-frame">
-                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnImageRefreshClick(this)" data-streaming=false>
+                            <button type="button" class="btn btn-image-refresh" id="camera_2_image_refresh" onclick="btnGetDirectImageClick(this)" data-streaming=false>
                                 <div class="font-button-labels">Refresh</div>
                             </button>
                         </div>
@@ -313,51 +320,61 @@
         let sliderThresholdValueCamera3 = document.getElementById("camera_3_confidence_sliderLabel");
         let signalRHub;
         let imageCountMap = new Map();
-        let pendingInferenceCount = new Map();
+        let cameraInfoMap = new Map();
         let modelInfoMap = new Map();
-        let camera_1_pending_inference_Count = 0;
-        let camera_2_pending_inference_Count = 0;
-        let aiButtonMap = new Map();
-        let modelListMap = new Map();
-        let device2canvasMap = new Map();
         const deviceIds = [];
         let bAutoPilot = false;
+        let bAutoPilotImage = false
+        let bInitialized = false;
+        let classColorMap = new Map();
+
+        classColorMap.set(0, 'yellow');
+        classColorMap.set(1, 'red');
+
 
         window.onload = function () {
         };
 
         $(document).ready(function () {
 
+            // Initialize canvas before initializing cameras
+            initCanvas('camera_1_canvas');
+            initCanvas('camera_2_canvas');
+
             let camera1_id = '@(ViewData["Camera_1_ID"])';
             let camera2_id = '@(ViewData["Camera_2_ID"])';
             let camera3_id = '@(ViewData["Camera_3_ID"])';
             deviceIds.push(camera1_id);
             deviceIds.push(camera2_id);
-            //            deviceIds.push('@(ViewData["Camera1_ID"])');
 
-            aiButtonMap.set(camera1_id, 'camera_1_ai_btn');
-            aiButtonMap.set(camera2_id, 'camera_2_ai_btn');
-            aiButtonMap.set(camera3_id, 'camera_3_ai_btn');
+            modelInfoMap.set('suitcase_people', { 'CommandFileModelCount0' : 'suitcase_people_0', 'CommandFileModelCount1': 'suitcase_people_1', 'classId': '1' });
+            modelInfoMap.set('suitcase_car', { 'CommandFileModelCount0' : 'suitcase_car_0', 'CommandFileModelCount1': 'suitcase_car_1', 'classId': '0' });
 
-            modelListMap.set(camera1_id, 'camera_1_model_list');
-            modelListMap.set(camera2_id, 'camera_2_model_list');
-            modelListMap.set(camera3_id, 'camera_3_model_list');
+            let index = 1;
+            deviceIds.forEach((deviceId) => {
+                cameraInfoMap.set(deviceId, {
+                    'cameraName' : '',
+                    'cameraNameId': `camera_${index}_name`,
+                    'wifiIconId': `camera_${index}_wifi_icon`,
+                    'modelListId': `camera_${index}_model_list`,
+                    'btnAiId': `camera_${index}_ai_btn`,
+                    'btnRefreshImageId': `camera_${index}_image_refresh`,
+                    'btnClearImageId': `camera_${index}_image_clear`,
+                    'canvas':`camera_${index}_canvas`,
+                    'currentModelId': '',
+                    'currentCommandParameterFile' : '',
+                    'pendingInferenceCount': 0
+                });
+                index++;
+            });
 
-            device2canvasMap.set(camera1_id, 'camera_1_canvas');
-            device2canvasMap.set(camera2_id, 'camera_2_canvas');
-            device2canvasMap.set(camera3_id, 'camera_3_canvas');
-
-            //
-            //
-            // Slider
-            //
-            //camera_3_confidence_sliderLabel.innerHTML = `${camera_1_confidence_slider.value}%`;
-            //camera_2_confidence_sliderLabel.innerHTML = `${camera_2_confidence_slider.value}%`;
-            //camera_3_confidence_sliderLabel.innerHTML = `${camera_3_confidence_slider.value}%`;
-
-            //sliderThresholdCamera1.addEventListener("input", processSliderInput, false);
-            //sliderThresholdCamera2.addEventListener("input", processSliderInput, false);
-            //sliderThresholdCamera3.addEventListener("input", processSliderInput, false);
+            console.debug('=====> initCameras')
+            initCameras().
+                then(function (){
+                    console.debug('<===== initCameras')
+                    bInitialized = true;
+                    DisableEnableNavbarButtons(false);
+                });
 
             $("input[data-bootstrap-switch]").each(function () {
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
@@ -366,8 +383,6 @@
             $('.sidebar-mini').removeClass('sidebar-open');
             $('.sidebar-mini').addClass('sidebar-closed sidebar-collapse');
 
-            initCanvas('camera_1_canvas');
-            initCanvas('camera_2_canvas');
             //disabled for EVS
             //initCanvas('camera_3_canvas');
 
@@ -388,67 +403,102 @@
                 processTelemetry(payload);
             });
 
-            // new ResizeObserver(canvasResize).observe(document.getElementById('camera_3_canvas_container'));
+            let loaderSpinner = document.getElementById(`loaderSpinner`);
+            loaderSpinner.style.display = "none";
+            //bInitialized = true;
+            //DisableEnableNavbarButtons(false);
 
-            //const canvas = document.getElementsByTagName('camera_3_canvas_container')[0];
-            //const observer = new ResizeObserver(onResize);
-            //observer.observe(canvas);
-
-            GetModelInfo();
-
-            UpdateAllCameraData('@(ViewData["Camera_1_ID"])', '@(ViewData["Camera_2_ID"])', '@(ViewData["Camera_3_ID"])');
         });
 
-        function getDate(dateString) {
-            var date = new Date(Date.UTC(dateString.substr(0, 4), dateString.substr(4, 2), dateString.substr(6, 2), dateString.substr(8, 2), dateString.substr(10, 2), dateString.substr(12, 2), dateString.substr(14, 3)));
-            return date;
-        }
-
+        // Clear logs in text area
         $('#btnClearLogs').click(function (evt) {
             document.getElementById('txAreaStatus').value = null;
         })
 
-        var resizeIt = function () {
-            console.log("Resize");
-            //var size = calculateAspectRatioFit($canvas.width(), $canvas.height(), $container.width(), $container.height());
+        function StartAutoPilotNoImageClick() {
 
-            //$canvas.css('height', size.height);
-            //$canvas.css('width', size.width);
-        };
+            // Set flags
+            bAutoPilot = true;
+            bAutoPilotImage = false;
 
-        function canvasResize(test) {
-            //let container = $('#camera_3_canvas_container');
-            //console.log(`${container.innerWidth()} x ${container.innerHeight()}`);
-            //var canvas = document.getElementById('camera_3_canvas');
-            //var ctx = canvas.getContext("2d");
+            // Change icons' active status
+            $(`#autopilot-start-No-Image`).addClass('Svg-Active');
+            $(`#autopilot-start-No-Image`).removeClass('Svg-White');
+            $(`#autopilot-start-No-Image`).prop('disabled', true);
 
-            //let data = ctx.getImageData();
-            //canvas.width = `${container.innerWidth()}px`;
-            //canvas.style.height = `${container.innerHeight()}px`;
-            //ctx.putImageData(data);
+            // Start inference on all devices
+            deviceIds.forEach((deviceId) => {
+                SetPendingInferenceCount(deviceId, -1);
+                StartUploadInferenceResultWrapper(deviceId);
+            });
+
+            // Disable Navbar Buttons
+            DisableEnableNavbarButtons(true);
         }
 
         function StartAutoPilotClick() {
 
+            // Set flags
             bAutoPilot = true;
+            bAutoPilotImage = true;
+
+            // Change icons' active status
             $(`#autopilot-start`).addClass('Svg-Active');
             $(`#autopilot-start`).removeClass('Svg-White');
+            $(`#autopilot-start-No-Image`).prop('disabled', true);
 
+            // Start inference on all devices
             deviceIds.forEach((deviceId) => {
+                SetPendingInferenceCount(deviceId, -1);
                 StartUploadInferenceResultWrapper(deviceId);
             });
+
+            // Disable Navbar Buttons
+            DisableEnableNavbarButtons(true);
         }
+
 
         function StopAutoPilotClick() {
 
+            // Set flag
             bAutoPilot = false;
+            // Change icons' active status
             $(`#autopilot-start`).addClass('Svg-White');
             $(`#autopilot-start`).removeClass('Svg-Active');
+            $(`#autopilot-start-No-Image`).addClass('Svg-White');
+            $(`#autopilot-start-No-Image`).removeClass('Svg-Active');
 
+            // Stop inference on all devices
             deviceIds.forEach((deviceId) => {
-                HideSpinner(device2canvasMap.get(deviceId));
+                SetPendingInferenceCount(deviceId, 0);
                 StopUploadInferenceResultWrapper(deviceId);
             });
+
+            // Enable Navbar Buttons
+            DisableEnableNavbarButtons(false);
+        }
+
+        function DisableEnableNavbarButtons(start)
+        {
+            if (start == true)
+            {
+                $(`#autopilot-start-No-Image-ahref`).addClass('link-disabled');
+                $(`#autopilot-start-ahref`).addClass('link-disabled');
+                $(`#autopilot-stop-ahref`).removeClass('link-disabled')
+
+                cameraInfoMap.forEach((cameraInfo) => {
+                    $(`#${cameraInfo.btnAiId}`).prop('disabled', true);
+                });
+            }
+            else
+            {
+                $(`#autopilot-start-No-Image-ahref`).removeClass('link-disabled');
+                $(`#autopilot-start-ahref`).removeClass('link-disabled');
+                $(`#autopilot-stop-ahref`).addClass('link-disabled')
+                cameraInfoMap.forEach((cameraInfo) => {
+                    $(`#${cameraInfo.btnAiId}`).prop('disabled', false);
+                });
+            }
         }
 
         function HideOverlay()

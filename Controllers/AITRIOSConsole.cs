@@ -1,12 +1,15 @@
 ﻿using AITRIOS_Console_Mockup.Models;
+using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using static AITRIOS_Console_Mockup.Models.AITRIOSConsole;
 
 namespace AITRIOS_Console_Mockup.Controllers
@@ -111,6 +114,67 @@ namespace AITRIOS_Console_Mockup.Controllers
                 AddRequestHeader(client);
 
                 return await client.PostAsync(requestUri.AbsoluteUri, requestContent);
+            }
+        }
+
+        private async Task<HttpResponseMessage> SendPut(string requestSegment, HttpContent content)
+        {
+            if ((_appSettings == null) || (_appSettings.ConsoleSettings == null) || (_appSettings.ConsoleSettings.BaseUrl == null))
+            {
+                throw new ArgumentException("{\"status\":\"Missing App Settings.\"}");
+            }
+
+            // Make sure token is available and not expired.
+            // should move this to AddRequestHeader()
+            if (_consoleToken.response == null || ((_consoleToken.expiration - DateTime.UtcNow).Minutes < 5))
+            {
+                var ret = await GetConsoleTokenAsync();
+                if (!ret)
+                {
+                    throw new ArgumentException("{\"status\":\"Failed to get Access Token\"}");
+                }
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                Uri baseUri = new Uri(_appSettings.ConsoleSettings.BaseUrl);
+                Uri requestUri = new Uri($"{baseUri.AbsoluteUri}/{requestSegment}");
+
+                AddRequestHeader(client);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                return await client.PutAsync(requestUri.AbsoluteUri, content);
+            }
+        }
+
+        private async Task<HttpResponseMessage> SendDelete(string requestSegment, HttpContent content)
+        {
+            if ((_appSettings == null) || (_appSettings.ConsoleSettings == null) || (_appSettings.ConsoleSettings.BaseUrl == null))
+            {
+                throw new ArgumentException("{\"status\":\"Missing App Settings.\"}");
+            }
+
+            // Make sure token is available and not expired.
+            // should move this to AddRequestHeader()
+            if (_consoleToken.response == null || ((_consoleToken.expiration - DateTime.UtcNow).Minutes < 5))
+            {
+                var ret = await GetConsoleTokenAsync();
+                if (!ret)
+                {
+                    throw new ArgumentException("{\"status\":\"Failed to get Access Token\"}");
+                }
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                Uri baseUri = new Uri(_appSettings.ConsoleSettings.BaseUrl);
+                Uri requestUri = new Uri($"{baseUri.AbsoluteUri}/{requestSegment}");
+
+                AddRequestHeader(client);
+                var request = new HttpRequestMessage(HttpMethod.Delete, requestUri.AbsoluteUri);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                request.Content = content;
+
+                return await client.SendAsync(request);
+//                return await client.DeleteAsync(requestUri.AbsoluteUri, content);
             }
         }
 
@@ -401,6 +465,53 @@ namespace AITRIOS_Console_Mockup.Controllers
         #endregion
 
         #region PUT
+        //
+        // Apply (or bind) a command parameter file to a given device
+        //
+        [HttpPut]
+        public async Task<ActionResult> ApplyCommandParameterFileToDevice(string deviceId, string file_name)
+        {
+            Debug.Assert(deviceId != null, "Device ID missing");
+
+            try
+            {
+                var httpContent = new Dictionary<string, string>();
+                var url = $"devices/configuration/command_parameter_files/{file_name}";
+
+                httpContent.Add("device_ids", deviceId);
+                var contentJson = JsonConvert.SerializeObject(httpContent);
+                var encodeContent = new StringContent(contentJson, Encoding.UTF8, "application/json");
+
+                var response = await SendPut(url, encodeContent);
+
+                if (response != null)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok(Json(jsonString));
+                    }
+                    else
+                    {
+                        return StatusCode((int)response.StatusCode, Json(jsonString));
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Json(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Excetion in {System.Reflection.MethodBase.GetCurrentMethod().Name}() {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
 
         // to do
         // Add ApplyCommandParameterFileToDevice()
@@ -412,6 +523,56 @@ namespace AITRIOS_Console_Mockup.Controllers
         // Add UpdateCommandParameterFile()
         // 
 
+        #endregion
+
+        #region DEL
+        //
+        // Cancel (or unbind) a command parameter file 
+        //
+        [HttpDelete]
+        public async Task<ActionResult> CancelCommandParameterFile(string deviceId, string file_name)
+        {
+            Debug.Assert(deviceId != null, "Device ID missing");
+
+            try
+            {
+                var httpContent = new Dictionary<string, string>();
+                var url = $"devices/configuration/command_parameter_files/{file_name}";
+
+                httpContent.Add("device_ids", deviceId);
+                var contentJson = JsonConvert.SerializeObject(httpContent);
+                var encodeContent = new StringContent(contentJson, Encoding.UTF8, "application/json");
+
+                var response = await SendDelete(url, encodeContent);
+
+                if (response != null)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok(Json(jsonString));
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, Json(jsonString));
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, Json(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Excetion in {System.Reflection.MethodBase.GetCurrentMethod().Name}() {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
         #endregion
 
     }

@@ -23,13 +23,23 @@
         }
     </style>
 </head>
-<body class="hold-transition sidebar-mini sidebar-collapse">
+@*<body class="hold-transition sidebar-mini sidebar-collapse">*@
+<body class="hold-transition">
 
     <div class="wrapper">
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="images/AITRIOS-Logo-White.svg" alt="AITRIOS Logo" >
-        </div>
+@*        <div class="preloader my-preloader flex-column justify-content-center align-items-center">
+            <img src="~/images/AITRIOS-Logo-Dark.png" alt="AITRIOS">
+        </div>*@
+        <div class="spinnerWrapper" id="loaderSpinner">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
 
+        </div>
         <!-- Top Navbar -->
         <nav class="main-header navbar navbar-expand navbar-dark my-navbar">
             <!-- Top Left navbar links -->
@@ -54,7 +64,7 @@
             <!-- Brand Logo -->
             <a href="#" class="brand-link my-brand-link my-brand-image-wrapper">
                 <img src="~/images/AITRIOS-Logo-White.svg" alt="AITRIOS" class="brand-image elevation-0 my-brand-image" width="29" height="38">
-                <span class="brand-text font-subhead my-brand-text" style="padding-left:0.3em">AITRIOS</span>
+                <span class="brand-text font-subhead" style="padding-left:0.3em">AITRIOS</span>
             </a>
 
             <div class="sidebar my-sidebar">
@@ -63,17 +73,27 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column my-nav-sidebar" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="StartAutoPilotClick();return false;">
-                                <div id="autopilot-start" class="Svg-White" width="24" height="24">
+                            <a href="#" class="nav-link link-disabled" onclick="StartAutoPilotNoImageClick();return false;" id="autopilot-start-No-Image-ahref">
+                                <div id="autopilot-start-No-Image" class="Svg-White" width="24" height="24">
                                     <svg width="24" height="24" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px">
                                         <path d="M0 0V14L11 7L0 0Z" fill="currentColor" />
                                     </svg>
-                                    <p class="font-menu-item">Start Demo</p>
+                                    <p class="font-menu-item">Start (No Image)</p>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="StopAutoPilotClick();return false;">
+                            <a href="#" class="nav-link link-disabled" onclick="StartAutoPilotClick();return false;" id="autopilot-start-ahref">
+                                <div id="autopilot-start" class="Svg-White" width="24" height="24">
+                                    <svg width="24" height="24" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px">
+                                        <path d="M0 0V14L11 7L0 0Z" fill="currentColor" />
+                                    </svg>
+                                    <p class="font-menu-item">Start</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link link-disabled" onclick="StopAutoPilotClick();return false;" id="autopilot-stop-ahref">
                                 <img src="~/images/Stop.svg" alt="AI" width="24" height="24" style="vertical-align: text-top;margin-right:8px">
                                 <p class="font-menu-item">Stop Demo</p>
                             </a>

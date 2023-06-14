@@ -17,17 +17,17 @@
   --bs-teal: #20c997;
   --bs-cyan: #0dcaf0;
   --bs-white: #fff;
-  --bs-gray: #6c757d;
-  --bs-gray-dark: #343a40;
-  --bs-gray-100: #f8f9fa;
-  --bs-gray-200: #e9ecef;
-  --bs-gray-300: #dee2e6;
-  --bs-gray-400: #ced4da;
-  --bs-gray-500: #adb5bd;
-  --bs-gray-600: #6c757d;
-  --bs-gray-700: #495057;
-  --bs-gray-800: #343a40;
-  --bs-gray-900: #212529;
+  --bs-grey: #6c757d;
+  --bs-grey-dark: #343a40;
+  --bs-grey-100: #f8f9fa;
+  --bs-grey-200: #e9ecef;
+  --bs-grey-300: #dee2e6;
+  --bs-grey-400: #ced4da;
+  --bs-grey-500: #adb5bd;
+  --bs-grey-600: #6c757d;
+  --bs-grey-700: #495057;
+  --bs-grey-800: #343a40;
+  --bs-grey-900: #212529;
   --bs-primary: #0d6efd;
   --bs-secondary: #6c757d;
   --bs-success: #198754;
@@ -5354,7 +5354,7 @@ textarea.form-control-lg {
 }
 
 .btn-close-white {
-  filter: invert(1) grayscale(100%) brightness(200%);
+  filter: invert(1) greyscale(100%) brightness(200%);
 }
 
 .toast {
@@ -6117,7 +6117,7 @@ textarea.form-control-lg {
 
 .carousel-dark .carousel-control-prev-icon,
 .carousel-dark .carousel-control-next-icon {
-  filter: invert(1) grayscale(100);
+  filter: invert(1) greyscale(100);
 }
 .carousel-dark .carousel-indicators [data-bs-target] {
   background-color: #000;

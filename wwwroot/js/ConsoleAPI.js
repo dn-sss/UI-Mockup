@@ -11,174 +11,292 @@
 // If Device ID is provided, AITRIOSConsole controller calls GetDevice() API.
 // If Device ID is empty, AITRIOSConsole controller calls GetDevices() API.
 //
-function GetDevices(deviceId) {
+async function GetDevices(deviceId) {
 
-    var funcName = `${arguments.callee.name}(${deviceId})`;
-    console.debug(`==> ${funcName}`);
+    var fn = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${fn}`);
     const start = Date.now();
+    var result;
+    var canvasId = GetCanvasFromDeviceId(deviceId);
+
 
     try {
-        return $.ajax({
+        showSpinnerAndDisplayMessage(canvasId, `Retrieving Device Information`);
+
+        await $.ajax({
             async: true,
             type: "GET",
             url: window.location.origin + '/' + 'AITRIOSConsole/GetDevices',
             data: { deviceId: deviceId },
             success: function (response) {
                 const end = Date.now();
-                console.log(`${funcName} success ${end - start} ms`);
+                console.log(`   ${fn} success ${end - start} ms`);
+                let jsonData = JSON.parse(response.value);
+                let jsonPretty = JSON.stringify(jsonData, undefined, 2);
+                // add to log
+                Add2Log(`GetDevices : ${jsonPretty}`);
+                result = response;
             },
             error: function (jqXHR) {
                 const end = Date.now();
-                console.log(`${funcName} error ${end - start} ms`);
-        //    },
-        //    complete: function (response) {
-        //        console.log(`${funcName} complete`);
+                console.log(`${fn} error ${end - start} ms`);
+                result = null;
+                //debugger
             }
         });
     } catch (err) {
+        console.error(err);
     } finally {
+        HideSpinner(canvasId);
     }
+    return result;
 }
 
 //
 // Calls GetDirectImage() API through AITRIOSConsole Controller
 //
-function GetDirectImage(deviceId) {
+async function GetDirectImage(deviceId, bHideSpinner) {
 
-    var funcName = `${arguments.callee.name}(${deviceId})`;
-    console.debug(`==> ${funcName}`);
+    var fn = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${fn}`);
     const start = Date.now();
+    var result = null;
+    var canvasId = GetCanvasFromDeviceId(deviceId);
 
     try {
 
-         return $.ajax({
+        showSpinnerAndDisplayMessage(canvasId, `Capturing an Image from ${cameraInfoMap.get(deviceId).cameraName}`);
+
+        await $.ajax({
             async: true,
             type: "GET",
             url: window.location.origin + '/' + 'AITRIOSConsole/GetDirectImage',
             data: { deviceId: deviceId },
             success: function (response) {
                 const end = Date.now();
-                console.log(`${funcName} success ${end - start} ms`);
+                console.log(`   ${fn} success ${end - start} ms`);
+                result = response;
             },
             error: function (jqXHR) {
                 const end = Date.now();
-                console.log(`${funcName} error ${end - start} ms`);
-            //},
-            //complete: function (response) {
-            //    console.log(`${funcName} complete`);
+                console.log(`${fn} error ${end - start} ms`);
+                //debugger
             }
         });
 
-        return response
     } catch (err) {
+        console.error(err);
     } finally {
+        if (bHideSpinner) {
+            HideSpinner(canvasId);
+        }
     }
+    return result;
+
 }
 
 //
 // Calls StartUploadInferenceResult() API through AITRIOSConsole Controller
 //
-function StartUploadInferenceResult(deviceId) {
-    var funcName = `${arguments.callee.name}(${deviceId})`;
-    console.debug(`==> ${funcName}`);
-    const start = Date.now();
+async function StartUploadInferenceResult(deviceId) {
 
+    var fn = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${fn}`);
+    const start = Date.now();
+    var bResult = false;
+    var canvasId = GetCanvasFromDeviceId(deviceId);
+    
     try {
 
-        pendingInferenceCount.set(deviceId, imageCountMap.get(deviceId));
+        showSpinnerAndDisplayMessage(canvasId, `Sending a command to start AI on Image Sensor`);
 
-        return $.ajax({
+        await $.ajax({
             async: true,
             type: "POST",
             url: window.location.origin + '/' + 'AITRIOSConsole/StartUploadInferenceResult',
             data: { deviceId: deviceId },
             success: function (response) {
                 const end = Date.now();
-                console.log(`${funcName} success ${end - start} ms`);
-
+                console.log(`   ${fn} success ${end - start} ms`);
+                toggleAiButtonActiveState(cameraInfoMap.get(deviceId).btnAiId, true);
+                showSpinnerAndDisplayMessage(canvasId, "Waiting for AI results");
+                bResult = true;
             },
             error: function (jqXHR) {
-                console.log(`${funcName} error`);
-            //},
-            //complete: function (response) {
-            //    console.log(`${funcName} complete`);
+                const end = Date.now();
+                console.log(`${fn} error ${end - start} ms`);
+                displayMessage(canvasId, 'Failed to start AI Inference');
+                HideSpinner(canvasId);
+                //debugger;
             }
         });
     } catch (err) {
+        console.error(err);
     } finally {
     }
+    return bResult;
 }
 
 //
 // Calls StopUploadInferenceResult() API through AITRIOSConsole Controller
+// This is synchronous call.
 //
-function StopUploadInferenceResult(deviceId) {
+async function StopUploadInferenceResult(deviceId) {
 
-    var funcName = `${arguments.callee.name}(${deviceId})`;
-    console.debug(`==> ${funcName} `);
+    var fn = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${fn} `);
     const start = Date.now();
+    var canvasId = GetCanvasFromDeviceId(deviceId);
 
     try {
-        pendingInferenceCount.set(deviceId, 0);
-        toggleAiButton(aiButtonMap.get(deviceId), false);
+        showSpinnerAndDisplayMessage(canvasId, `Sending a command to stop AI on Image Sensor`);
+        // Put AI Button into inactive state
+        toggleAiButtonActiveState(cameraInfoMap.get(deviceId).btnAiId, false);
 
-        return $.ajax({
+        await $.ajax({
             async: true,
             type: "POST",
             url: window.location.origin + '/' + 'AITRIOSConsole/StopUploadInferenceResult',
             data: { deviceId: deviceId },
             success: function (response) {
                 const end = Date.now();
-                console.log(`${funcName} success ${end - start} ms`);
+                console.log(`   ${fn} success ${end - start} ms`);
+                return true;
             },
             error: function (jqXHR) {
                 const end = Date.now();
-                console.log(`${funcName} error ${end - start} ms`);
-            //},
-            //complete: function (response) {
-            //    console.log(`${funcName} complete`);
+                console.log(`${fn} error ${end - start} ms`);
+                displayMessage(canvasId, 'Failed to stop AI Inference');
+                //debugger;
+                return false;
             }
         });
-
-        return response;
     } catch (err) {
+        console.erro(err);
     } finally {
+        HideSpinner(canvasId);
     }
+    return false;
 }
+
 
 //
 // Calls GetCommandParameterFile() API through AITRIOSConsole Controller
 //
-function GetCommandParameterFile() {
+async function GetCommandParameterFile() {
 
-    var funcName = `${arguments.callee.name}()`;
-    console.debug(`==> ${funcName}`);
+    var fn = `${arguments.callee.name}()`;
+    console.debug(`==> ${fn}`);
     const start = Date.now();
+    var result = null;
 
     try {
-        return $.ajax({
+        await $.ajax({
             async: true,
             type: "GET",
             url: window.location.origin + '/' + 'AITRIOSConsole/GetCommandParameterFile',
-            data: { },
+            data: {},
             success: function (response) {
                 const end = Date.now();
-                console.log(`${funcName} success ${end - start} ms`);
+                console.log(`   ${fn} success ${end - start} ms`);
+                result = response;
             },
             error: function (jqXHR) {
                 const end = Date.now();
-                console.log(`${funcName} error ${end - start} ms`);
-                debugger
-                //},
-                //complete: function (response) {
-                //    console.log(`${funcName} complete`);
+                console.log(`${fn} error ${end - start} ms`);
+                //debugger;
             }
         });
 
-        return response;
     } catch (err) {
+        console.error(err);
     } finally {
     }
+    return result;
 }
 
+//
+// Calls ApplyCommandParameterFileToDevice() API through AITRIOSConsole Controller
+//
+async function ApplyCommandParameterFileToDevice(deviceId, file_name) {
+
+    var fn = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${fn} file : ${file_name}`);
+
+    const start = Date.now();
+    var bResult = false;
+    var canvasId = GetCanvasFromDeviceId(deviceId);
+
+    try {
+
+        showSpinnerAndDisplayMessage(canvasId, `Applying AI Configuration to camera`);
+
+        await $.ajax({
+            async: true,
+            type: "PUT",
+            url: window.location.origin + '/' + 'AITRIOSConsole/ApplyCommandParameterFileToDevice',
+            data: {
+                deviceId: deviceId,
+                file_name: file_name
+            },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`   ${fn} success ${end - start} ms`);
+                SetCurrentCommandParameterFile(deviceId, file_name);
+                SetCurrentModelId(deviceId, file_name);
+                bResult = true;
+            },
+            error: function (jqXHR) {
+                const end = Date.now();
+                console.log(`${fn} error ${end - start} ms`);
+                //debugger;
+            }
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+        HideSpinner(canvasId);
+    }
+
+    console.debug(`<== ${fn}`);
+    return bResult;
+}
+
+//
+// Calls CancelCommandParameterFile() API through AITRIOSConsole Controller
+//
+async function CancelCommandParameterFile(deviceId, file_name) {
+
+    var fn = `${arguments.callee.name}(${deviceId})`;
+    console.debug(`==> ${fn} file : ${file_name}`);
+    const start = Date.now();
+    var bResult = false;
+
+    try {
+        await $.ajax({
+            async: true,
+            type: "DELETE",
+            url: window.location.origin + '/' + 'AITRIOSConsole/CancelCommandParameterFile',
+            data: {
+                deviceId: deviceId,
+                file_name: file_name
+            },
+            success: function (response) {
+                const end = Date.now();
+                console.log(`   ${fn} success ${end - start} ms`);
+                bResult = true;
+            },
+            error: function (jqXHR) {
+                const end = Date.now();
+                console.log(`${fn} error ${end - start} ms`);
+                //debugger;
+            }
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+    }
+    console.debug(`<= ${fn}`);
+    return bResult;
+}
 
