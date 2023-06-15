@@ -342,6 +342,9 @@ function processTelemetry(payload) {
                             StartUploadInferenceResultWrapper(deviceId);
                         });
                 }
+                else {
+                    DisableButtons(cameraInfo, false);
+                }
             }
         }
     }
@@ -728,6 +731,18 @@ function DisableButtons(cameraInfo, disable) {
     $(`#${cameraInfo.btnAiId}`).prop('disabled', disable);
     $(`#${cameraInfo.btnRefreshImageId}`).prop('disabled', disable);
     $(`#${cameraInfo.btnClearImageId}`).prop('disabled', disable);
+
+    if (disable) {
+        $(`#autopilot-start-No-Image-ahref`).addClass('link-disabled');
+        $(`#autopilot-start-ahref`).addClass('link-disabled');
+        $(`#autopilot-stop-ahref`).addClass('link-disabled')
+
+    }
+    else {
+        $(`#autopilot-start-No-Image-ahref`).removeClass('link-disabled');
+        $(`#autopilot-start-ahref`).removeClass('link-disabled');
+        $(`#autopilot-stop-ahref`).removeClass('link-disabled')
+    }
 }
 
 
